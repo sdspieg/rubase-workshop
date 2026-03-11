@@ -434,7 +434,7 @@
     <div class="day-progress">
         <div class="day-item day1 active" onclick="loadDay(1)">
             <div class="day-number">1</div>
-            <div class="day-title">INGEST</div>
+            <div class="day-title">DISCOVER</div>
             <div class="day-subtitle">Finding What You've Been Missing</div>
         </div>
         <div class="day-item day2" onclick="loadDay(2)">
@@ -453,7 +453,7 @@
     <div class="main-container">
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
-            <h3 style="color: var(--accent-cyan); margin-bottom: 20px;">DAY 1: INGEST</h3>
+            <h3 style="color: var(--accent-cyan); margin-bottom: 20px;">DAY 1: DISCOVER</h3>
             <ul class="module-list">
                 <li class="module-item">
                     <div class="module-header" onclick="window.location.href='modules/welcome/index.html'" style="cursor: pointer;">
@@ -553,7 +553,7 @@
 
             days: {
                 1: {
-                    title: 'INGEST',
+                    title: 'DISCOVER',
                     modules: ['welcome', 'rubase', 'biblio', 'corpus']
                 },
                 2: {
@@ -719,7 +719,7 @@
 
             // When Day 1 is clicked, go to the ingest page
             if (dayNumber === 1) {
-                window.location.href = 'modules/ingest/index.html';
+                window.location.href = 'modules/discover/index.html';
                 return;
             }
 
