@@ -428,7 +428,6 @@
         <div class="header-title">🎓 RuBase Methods Workshop</div>
         <nav class="header-nav">
             <button onclick="showHome()">🏠 Home</button>
-            <button onclick="showProgress()">📊 Progress</button>
             <button onclick="showResources()">📚 Resources</button>
             <button onclick="showHelp()">❓ Help</button>
         </nav>
@@ -440,25 +439,16 @@
             <div class="day-number">1</div>
             <div class="day-title">INGEST</div>
             <div class="day-subtitle">Finding What You've Been Missing</div>
-            <div class="day-progress-bar">
-                <div class="day-progress-fill" style="width: 25%"></div>
-            </div>
         </div>
         <div class="day-item day2" onclick="loadDay(2)">
             <div class="day-number">2</div>
             <div class="day-title">FRAME</div>
             <div class="day-subtitle">Building Rigorous Analytical Pipelines</div>
-            <div class="day-progress-bar">
-                <div class="day-progress-fill" style="width: 0%"></div>
-            </div>
         </div>
         <div class="day-item day3 locked" onclick="loadDay(3)">
             <div class="day-number">3</div>
             <div class="day-title">ANALYZE</div>
             <div class="day-subtitle">From Frameworks to Findings</div>
-            <div class="day-progress-bar">
-                <div class="day-progress-fill" style="width: 0%"></div>
-            </div>
         </div>
     </div>
 
@@ -633,10 +623,10 @@
             }
         };
 
-        // Initialize
+        // Initialize - Redirect to Ingest module immediately
         document.addEventListener('DOMContentLoaded', () => {
-            updateProgress();
-            checkLocks();
+            // Automatically go to the Ingest module on load
+            window.location.href = 'modules/ingest/index.html';
         });
 
         // Navigation functions
@@ -766,28 +756,15 @@
         }
 
         function saveProgress() {
-            const progress = {
-                day: WORKSHOP.currentDay,
-                module: WORKSHOP.currentModule,
-                section: WORKSHOP.currentSection,
-                timestamp: new Date().toISOString()
-            };
-            localStorage.setItem('workshop-progress', JSON.stringify(progress));
+            // Progress tracking removed
         }
 
         function loadProgress() {
-            const saved = localStorage.getItem('workshop-progress');
-            if (saved) {
-                const progress = JSON.parse(saved);
-                if (progress.module && progress.section) {
-                    loadSection(progress.module, progress.section);
-                }
-            }
+            // Progress tracking removed
         }
 
         function updateProgress() {
-            // Calculate and display progress bars
-            // This would be more sophisticated in production
+            // Progress tracking removed
         }
 
         function checkLocks() {
@@ -814,9 +791,6 @@
             console.log('Next section');
         }
 
-        function showProgress() {
-            alert('Progress tracking coming soon!');
-        }
 
         function showResources() {
             loadSection('resources', 'guides');
