@@ -525,12 +525,17 @@
             transform: scale(1.3);
         }
 
-        .exit-btn {
+        .top-buttons {
             position: fixed;
             top: 15px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 99;
+            display: flex;
+            gap: 15px;
+        }
+
+        .exit-btn, .back-btn {
             height: 60px;  /* Same height as logo container */
             display: flex;
             align-items: center;
@@ -545,6 +550,11 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
             box-shadow: 0 4px 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .exit-btn:hover, .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(0, 255, 255, 0.5);
         }
     </style>
 </head>
@@ -1629,10 +1639,15 @@
             <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">→</button>
         </div>
 
-        <!-- Exit Button -->
-        <button class="exit-btn" onclick="window.location.href='dashboard.html'">
-            Skip to Dashboard →
-        </button>
+        <!-- Top Navigation Buttons -->
+        <div class="top-buttons">
+            <button class="back-btn" onclick="window.location.href='../../index.html'">
+                ← Back to Workshop
+            </button>
+            <button class="exit-btn" onclick="window.location.href='dashboard.html'">
+                Skip to Dashboard →
+            </button>
+        </div>
     </div>
 
     <script>
