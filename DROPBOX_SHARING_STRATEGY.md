@@ -39,7 +39,7 @@ Your strategy is **perfect** and will work exactly as intended:
 ```
 
 ### 📱 QR Code for Mobile Access:
-![Dropbox Folder QR Code](dropbox_folder_qr.png)
+![Dropbox Folder QR Code](https://sdspieg.github.io/rubase-workshop-fletcher-2603/dropbox_folder_qr.png)
 
 **This QR code contains the full Dropbox link and works from ANY device!**
 - Students can scan with their phone camera
