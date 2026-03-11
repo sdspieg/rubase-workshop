@@ -460,9 +460,7 @@
                         <span class="module-title">Welcome & Setup</span>
                     </div>
                     <div class="module-sections">
-                        <div class="section-item" onclick="loadSection('welcome', 'overview')">Workshop Overview</div>
-                        <div class="section-item" onclick="loadSection('welcome', 'schedule')">3-Day Schedule</div>
-                        <div class="section-item" onclick="loadSection('welcome', 'resources')">Resources & Materials</div>
+                        <div class="section-item" onclick="loadSection('welcome', 'overview')">Welcome Presentation</div>
                     </div>
                 </li>
                 <li class="module-item">
@@ -506,11 +504,6 @@
                 <p class="welcome-subtitle">AI-Augmented Research at The Fletcher School</p>
 
                 <div class="quick-start-grid">
-                    <div class="quick-start-card" style="border-color: var(--bright-yellow); background: linear-gradient(135deg, rgba(255,255,0,0.05), rgba(255,165,0,0.02));" onclick="window.location.href='modules/welcome/index.html'">
-                        <div class="quick-start-icon">👋</div>
-                        <div class="quick-start-title" style="color: var(--bright-yellow);">Welcome & Orientation</div>
-                        <div class="quick-start-desc"><strong style="color: var(--bright-red);">START HERE</strong> - Essential info for Adam's opening</div>
-                    </div>
                     <div class="quick-start-card" onclick="window.location.href='modules/workshop-overview/index.html'">
                         <div class="quick-start-icon">📅</div>
                         <div class="quick-start-title">Workshop Schedule</div>
@@ -581,9 +574,9 @@
                     title: 'Welcome & Setup',
                     presenter: 'Adam',
                     sections: {
-                        'overview': 'slides/welcome-overview.html',
-                        'schedule': 'slides/welcome-schedule.html',
-                        'resources': 'slides/welcome-resources.html'
+                        'overview': './modules/welcome/index.html',
+                        'schedule': './modules/welcome/index.html',
+                        'resources': './modules/welcome/index.html'
                     }
                 },
                 'rubase': {
@@ -641,9 +634,9 @@
             const sectionPath = module.sections[sectionId];
             if (!sectionPath) return;
 
-            // Special handling for OpenAlex - open in new tab/full screen
-            if (moduleId === 'biblio' && sectionId === 'openalex') {
-                // Open OpenAlex in same window (full screen)
+            // Special handling for OpenAlex and Welcome - open in same window (full screen)
+            if ((moduleId === 'biblio' && sectionId === 'openalex') || moduleId === 'welcome') {
+                // Open in same window (full screen)
                 // Construct the full path properly
                 const basePath = window.location.pathname.replace('/index.html', '').replace(/\/$/, '');
                 const fullPath = basePath + '/' + sectionPath.replace('./', '');
