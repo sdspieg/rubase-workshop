@@ -618,7 +618,7 @@
                     sections: {
                         'fundamentals': 'slides/biblio-fundamentals.html',
                         'lens': 'slides/biblio-lens.html',
-                        'openalex': 'modules/openalex/index.html'
+                        'openalex': './modules/openalex/index.html'
                     }
                 },
                 'corpus': {
@@ -661,7 +661,10 @@
             // Special handling for OpenAlex - open in new tab/full screen
             if (moduleId === 'biblio' && sectionId === 'openalex') {
                 // Open OpenAlex in same window (full screen)
-                window.location.href = sectionPath;
+                // Construct the full path properly
+                const basePath = window.location.pathname.replace('/index.html', '').replace(/\/$/, '');
+                const fullPath = basePath + '/' + sectionPath.replace('./', '');
+                window.location.href = fullPath;
                 return;
             }
 
