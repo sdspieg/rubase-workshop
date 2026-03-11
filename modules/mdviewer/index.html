@@ -77,10 +77,15 @@
             color: var(--bright-cyan);
         }
 
-        .back-btn {
-            background: linear-gradient(135deg, var(--bright-cyan), var(--bright-purple));
-            color: var(--dark-bg);
-            border: none;
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: rgba(20, 40, 71, 0.9);
+            border: 2px solid var(--bright-cyan);
+            color: var(--bright-cyan);
             padding: 10px 25px;
             font-size: 1rem;
             font-weight: 700;
@@ -90,7 +95,8 @@
             text-transform: uppercase;
         }
 
-        .back-btn:hover {
+        .nav-btn:hover {
+            background: rgba(0, 255, 255, 0.15);
             transform: scale(1.05);
             box-shadow: 0 6px 30px rgba(0, 255, 255, 0.5);
         }
@@ -261,7 +267,10 @@
 
     <header class="header">
         <div class="header-title" id="docTitle">Document Viewer</div>
-        <button class="back-btn" onclick="window.location.href='../../index.html'">🏠 Home</button>
+        <div class="nav-buttons">
+            <button class="nav-btn" id="prevBtn" onclick="goBack()">← Previous</button>
+            <button class="nav-btn" onclick="window.location.href='../../index.html'">🏠 Home</button>
+        </div>
     </header>
 
     <div class="content">
@@ -276,6 +285,18 @@
 
         function goBack() {
             window.location.href = returnUrl;
+        }
+
+        // Update previous button text based on return URL
+        function updatePrevButtonText() {
+            const prevBtn = document.getElementById('prevBtn');
+            if (returnUrl.includes('resources')) {
+                prevBtn.textContent = '← Resources';
+            } else if (returnUrl.includes('landing')) {
+                prevBtn.textContent = '← Overview';
+            } else {
+                prevBtn.textContent = '← Previous';
+            }
         }
 
         async function loadMarkdownFile() {
@@ -374,7 +395,10 @@
         }
 
         // Load the markdown file when page loads
-        document.addEventListener('DOMContentLoaded', loadMarkdownFile);
+        document.addEventListener('DOMContentLoaded', () => {
+            updatePrevButtonText();
+            loadMarkdownFile();
+        });
     </script>
 </body>
 </html>
