@@ -196,9 +196,6 @@
             font-size: 1rem;
         }
 
-        .module-status {
-            font-size: 1.2rem;
-        }
 
         .module-sections {
             margin-left: 20px;
@@ -428,12 +425,12 @@
         <div class="header-title">🎓 RuBase Methods Workshop</div>
         <nav class="header-nav">
             <button onclick="showHome()">🏠 Home</button>
-            <button onclick="showResources()">📚 Resources</button>
-            <button onclick="showHelp()">❓ Help</button>
+            <button onclick="window.location.href='modules/resources/index.html'">📚 Resources</button>
+            <button onclick="window.location.href='modules/techhelp/index.html'">❓ Help</button>
         </nav>
     </header>
 
-    <!-- Day Progress -->
+    <!-- Day Selection -->
     <div class="day-progress">
         <div class="day-item day1 active" onclick="loadDay(1)">
             <div class="day-number">1</div>
@@ -461,7 +458,6 @@
                 <li class="module-item">
                     <div class="module-header" onclick="toggleModule(this)">
                         <span class="module-title">Welcome & Setup</span>
-                        <span class="module-status">✓</span>
                     </div>
                     <div class="module-sections">
                         <div class="section-item" onclick="loadSection('welcome', 'overview')">Workshop Overview</div>
@@ -472,7 +468,6 @@
                 <li class="module-item">
                     <div class="module-header" onclick="toggleModule(this)">
                         <span class="module-title">RuBase: What, Why, How</span>
-                        <span class="module-status">✓</span>
                     </div>
                     <div class="module-sections">
                         <div class="section-item" onclick="loadSection('rubase', 'what')">What is RuBase?</div>
@@ -483,7 +478,6 @@
                 <li class="module-item expanded">
                     <div class="module-header active" onclick="toggleModule(this)">
                         <span class="module-title">Bibliometrics</span>
-                        <span class="module-status">◐</span>
                     </div>
                     <div class="module-sections">
                         <div class="section-item" onclick="loadSection('biblio', 'fundamentals')">Fundamentals</div>
@@ -494,7 +488,6 @@
                 <li class="module-item">
                     <div class="module-header" onclick="toggleModule(this)">
                         <span class="module-title">Corpus Building</span>
-                        <span class="module-status">○</span>
                     </div>
                     <div class="module-sections">
                         <div class="section-item" onclick="loadSection('corpus', 'search')">Search Strategy</div>
@@ -623,10 +616,10 @@
             }
         };
 
-        // Initialize - Redirect to Landing page immediately
+        // Initialize - Show the hub interface
         document.addEventListener('DOMContentLoaded', () => {
-            // Automatically go to the Landing page on load
-            window.location.href = 'modules/landing/index.html';
+            // Don't redirect, show the main hub interface
+            // Users can navigate from here
         });
 
         // Navigation functions
@@ -734,9 +727,9 @@
                 return;
             }
 
-            // When Day 1 is clicked, go to the landing page
+            // When Day 1 is clicked, go to the ingest page
             if (dayNumber === 1) {
-                window.location.href = 'modules/landing/index.html';
+                window.location.href = 'modules/ingest/index.html';
                 return;
             }
 
