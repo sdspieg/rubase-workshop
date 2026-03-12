@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Dimensional Taxonomy Development Framework (MDTDF) - Complete Guide</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap');
+
+        :root {
+            --dark-bg: #0a192f;
+            --bright-cyan: #00ffff;
+            --bright-white: #ffffff;
+            --light-gray: #c8c8c8;
+            --bright-yellow: #ffff00;
+            --bright-green: #00ff7f;
+            --bright-red: #ff6347;
+            --bright-orange: #ffa500;
+            --bright-purple: #9370db;
+            --dark-accent: #142847;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Titillium Web', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg), #0f2340);
+            color: var(--bright-white);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--dark-accent), rgba(147, 112, 219, 0.1));
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--bright-purple);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--bright-purple);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 30px rgba(147, 112, 219, 0.5);
+        }
+
+        .header p {
+            color: var(--light-gray);
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: rgba(20, 40, 71, 0.95);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--bright-cyan);
+            position: sticky;
+            top: 140px;
+            z-index: 99;
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--bright-cyan), var(--bright-purple));
+            color: var(--dark-bg);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 255, 255, 0.4);
+        }
+
+        .nav-btn.copy {
+            background: linear-gradient(135deg, var(--bright-yellow), var(--bright-orange));
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 60px;
+            background: rgba(20, 40, 71, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            border: 2px solid rgba(147, 112, 219, 0.3);
+        }
+
+        .section h2 {
+            color: var(--bright-cyan);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 3px solid var(--bright-cyan);
+            padding-bottom: 15px;
+        }
+
+        .section h3 {
+            color: var(--bright-purple);
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 30px 0 20px;
+        }
+
+        .section h4 {
+            color: var(--bright-yellow);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 25px 0 15px;
+        }
+
+        /* Prompt Box */
+        .prompt-box {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(20, 40, 71, 0.5));
+            border: 2px solid var(--bright-purple);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prompt-box::before {
+            content: "MAIN PROMPT";
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            color: var(--bright-purple);
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .prompt-content {
+            font-family: 'Fira Code', monospace;
+            color: var(--bright-green);
+            font-size: 1rem;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--bright-yellow), var(--bright-orange));
+            color: var(--dark-bg);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .copy-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(255, 255, 0, 0.4);
+        }
+
+        .copy-button.copied {
+            background: linear-gradient(135deg, var(--bright-green), var(--bright-cyan));
+            animation: pulse 0.5s;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1.1); }
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.05));
+            border: 2px solid var(--bright-cyan);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .info-box h4 {
+            color: var(--bright-cyan);
+            margin-bottom: 15px;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, rgba(255, 99, 71, 0.1), rgba(255, 99, 71, 0.05));
+            border: 2px solid var(--bright-red);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .warning-box h4 {
+            color: var(--bright-red);
+            margin-bottom: 15px;
+        }
+
+        /* Success Box */
+        .success-box {
+            background: linear-gradient(135deg, rgba(0, 255, 127, 0.1), rgba(0, 255, 127, 0.05));
+            border: 2px solid var(--bright-green);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .success-box h4 {
+            color: var(--bright-green);
+            margin-bottom: 15px;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 10px 0;
+            color: var(--light-gray);
+        }
+
+        li strong {
+            color: var(--bright-white);
+        }
+
+        /* Code blocks */
+        code {
+            background: rgba(147, 112, 219, 0.2);
+            color: var(--bright-purple);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(147, 112, 219, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        pre code {
+            background: transparent;
+            color: var(--bright-cyan);
+            padding: 0;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid rgba(147, 112, 219, 0.3);
+        }
+
+        th {
+            background: linear-gradient(135deg, rgba(147, 112, 219, 0.2), rgba(147, 112, 219, 0.1));
+            color: var(--bright-purple);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        td {
+            background: rgba(20, 40, 71, 0.2);
+            color: var(--light-gray);
+        }
+
+        /* Example Box */
+        .example-box {
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.1), rgba(255, 165, 0, 0.05));
+            border: 2px solid var(--bright-orange);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .example-box h4 {
+            color: var(--bright-orange);
+            margin-bottom: 15px;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--bright-cyan), var(--bright-purple));
+            color: var(--dark-bg);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .prompt-content {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>🎯 MDTDF Guide</h1>
+        <p>Multi-Dimensional Taxonomy Development Framework<br>Complete Prompt & Implementation Guide</p>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-bar">
+        <a href="../../index.html" class="nav-btn">🏠 Home</a>
+        <a href="#main-prompt" class="nav-btn">📝 Main Prompt</a>
+        <a href="#structure" class="nav-btn">🏗️ Structure</a>
+        <a href="#examples" class="nav-btn">💡 Examples</a>
+        <a href="#processing" class="nav-btn">🔧 Processing</a>
+        <a href="#validation" class="nav-btn">✅ Validation</a>
+        <button onclick="copyAllPrompts()" class="nav-btn copy">📋 Copy All</button>
+    </div>
+
+    <!-- Container -->
+    <div class="container">
+        <!-- Main Prompt Section -->
+        <div class="section" id="main-prompt">
+            <h2>📝 The Complete MDTDF Prompt</h2>
+
+            <div class="info-box">
+                <h4>ℹ️ About This Prompt</h4>
+                <p>This is the complete, production-ready prompt for generating comprehensive multi-dimensional taxonomies. It has been refined through hundreds of iterations and produces consistent, high-quality taxonomic structures.</p>
+            </div>
+
+            <div class="prompt-box">
+                <button class="copy-button" onclick="copyPrompt('main-prompt-text')">📋 Copy Prompt</button>
+                <pre class="prompt-content" id="main-prompt-text">You are an expert taxonomist specializing in multi-dimensional classification systems. Your task is to create a comprehensive, orthogonal taxonomy for structured analysis.
+
+DOMAIN: [INSERT YOUR DOMAIN HERE]
+
+CONTEXT: [OPTIONAL: Add specific context about your research focus, data types, or analytical goals]
+
+Create a Multi-Dimensional Taxonomy Development Framework (MDTDF) with the following specifications:
+
+## STRUCTURAL REQUIREMENTS
+
+Generate exactly 9 High-Level Taxonomic Principles (HLTPs) where:
+- Each HLTP represents a completely orthogonal dimension of analysis
+- Each HLTP must be independent (changing position on one dimension doesn't affect others)
+- Each HLTP addresses a fundamentally different aspect of the domain
+
+For each HLTP, create:
+- Exactly 4 Second-Level Taxonomic Elements (L2)
+- For each L2, exactly 3 Third-Level Taxonomic Elements (L3)
+- For each L3, exactly 8 specific Taxa
+
+This creates 9 × 4 × 3 × 8 = 864 unique classification points.
+
+## ORTHOGONALITY REQUIREMENTS
+
+Ensure dimensional independence by verifying:
+1. Each HLTP can vary independently of all others
+2. An item can be "high" on dimension A while being "low" on dimension B
+3. No logical dependencies exist between dimensions
+4. Each dimension adds unique classificatory power
+
+## NAMING CONVENTIONS
+
+HLTPs (Dimensions):
+- Use clear, descriptive names (e.g., "Temporal", "Geographic", "Methodological")
+- Avoid overlapping conceptual territories
+- Maintain consistent abstraction level
+
+L2 Elements (Major Categories):
+- Name as subcategories that exhaustively partition the HLTP
+- Use parallel grammatical structure within each HLTP
+- Ensure MECE (Mutually Exclusive, Collectively Exhaustive)
+
+L3 Elements (Subcategories):
+- Provide finer granularity while maintaining clarity
+- Keep names concise but specific
+- Ensure logical hierarchy from L2
+
+Taxa (Specific Elements):
+- Use concrete, observable descriptors
+- Include enough detail for unambiguous classification
+- Maintain consistent specificity level across all taxa
+
+## OUTPUT FORMAT
+
+Provide the taxonomy in Tab-Separated Values (TSV) format with exactly 4 columns:
+
+HLTP[tab]2nd Level TE[tab]3rd Level TE[tab]Taxon
+
+Begin with the header row, then provide all 864 data rows.
+
+## QUALITY CRITERIA
+
+Your taxonomy must:
+✓ Cover the entire conceptual space of the domain
+✓ Avoid redundancy between dimensions
+✓ Enable precise classification of any item in the domain
+✓ Support quantitative analysis and visualization
+✓ Maintain consistent granularity at each level
+✓ Use terminology accessible to domain experts
+✓ Allow for edge cases and emerging phenomena
+
+## COMMON DIMENSIONS TO CONSIDER
+
+Adapt these to your specific domain:
+1. Temporal (time-based aspects)
+2. Geographic/Spatial (location or space-based)
+3. Thematic/Topical (subject matter)
+4. Methodological (approaches, techniques)
+5. Stakeholder/Actor (who is involved)
+6. Functional/Purpose (why/what for)
+7. Process/Lifecycle (stages, phases)
+8. Impact/Outcome (effects, results)
+9. Resource/Medium (tools, channels)
+
+Generate the complete taxonomy now. Begin with the TSV header, followed by all 864 rows.</pre>
+            </div>
+        </div>
+
+        <!-- Structure Explanation -->
+        <div class="section" id="structure">
+            <h2>🏗️ Understanding the Structure</h2>
+
+            <h3>The Mathematical Foundation</h3>
+            <div class="info-box">
+                <h4>Why 9 × 4 × 3 × 8?</h4>
+                <p>This specific structure balances several competing needs:</p>
+                <ul>
+                    <li><strong>9 dimensions</strong>: Comprehensive coverage without cognitive overload</li>
+                    <li><strong>4 L2 categories</strong>: Natural quartile divisions or 2×2 matrices</li>
+                    <li><strong>3 L3 subcategories</strong>: Manageable refinement (low/medium/high, past/present/future, etc.)</li>
+                    <li><strong>8 taxa</strong>: Sufficient specificity for detailed classification</li>
+                </ul>
+                <p>Total: <strong>864 unique classification points</strong> - enough for nuanced analysis while remaining manageable.</p>
+            </div>
+
+            <h3>Hierarchical Levels Explained</h3>
+
+            <table>
+                <tr>
+                    <th>Level</th>
+                    <th>Name</th>
+                    <th>Count</th>
+                    <th>Purpose</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>HLTP (Dimension)</td>
+                    <td>9</td>
+                    <td>Independent analytical axes</td>
+                    <td>Geographic</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>L2 (Major Category)</td>
+                    <td>36 total (4 per HLTP)</td>
+                    <td>Primary divisions within dimension</td>
+                    <td>Regional, National, International, Global</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>L3 (Subcategory)</td>
+                    <td>108 total (3 per L2)</td>
+                    <td>Refined classifications</td>
+                    <td>Sub-regional, Cross-border, Transnational</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Taxa (Elements)</td>
+                    <td>864 total (8 per L3)</td>
+                    <td>Specific, observable items</td>
+                    <td>Baltic cooperation, Nordic council, etc.</td>
+                </tr>
+            </table>
+
+            <h3>Orthogonality Principle</h3>
+            <div class="warning-box">
+                <h4>⚠️ Critical Requirement</h4>
+                <p>Each dimension must be truly independent. Test this by asking: "Can an item be high on dimension A while being low on dimension B?" If the answer is no, the dimensions are not orthogonal.</p>
+
+                <p><strong>Good Example:</strong></p>
+                <ul>
+                    <li>Temporal dimension (when) ⊥ Geographic dimension (where)</li>
+                    <li>A recent event (high temporal) can be local (low geographic)</li>
+                </ul>
+
+                <p><strong>Bad Example:</strong></p>
+                <ul>
+                    <li>"Complexity" and "Sophistication" - these overlap conceptually</li>
+                    <li>High complexity usually implies high sophistication</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Examples Section -->
+        <div class="section" id="examples">
+            <h2>💡 Domain-Specific Examples</h2>
+
+            <h3>Example 1: Cybersecurity Threats</h3>
+            <div class="example-box">
+                <h4>Prompt Customization</h4>
+                <pre>DOMAIN: Cybersecurity threats and vulnerabilities
+
+CONTEXT: Analysis of cyber incidents for national security assessment, focusing on state and non-state actors, attack vectors, and impact assessment.</pre>
+
+                <h4>Resulting Dimensions (HLTPs)</h4>
+                <ol>
+                    <li><strong>Actor Type</strong>: State, Criminal, Hacktivist, Insider</li>
+                    <li><strong>Attack Vector</strong>: Network, Physical, Social, Supply Chain</li>
+                    <li><strong>Target Sector</strong>: Government, Critical Infrastructure, Private, Individual</li>
+                    <li><strong>Geographic Origin</strong>: Domestic, Allied, Adversarial, Unknown</li>
+                    <li><strong>Temporal Pattern</strong>: Persistent, Sporadic, Coordinated, Opportunistic</li>
+                    <li><strong>Technical Sophistication</strong>: Script Kiddie, Intermediate, Advanced, Nation-State</li>
+                    <li><strong>Impact Type</strong>: Confidentiality, Integrity, Availability, Financial</li>
+                    <li><strong>Defensive Posture</strong>: Prevention, Detection, Response, Recovery</li>
+                    <li><strong>Attribution Confidence</strong>: Confirmed, Probable, Possible, Unknown</li>
+                </ol>
+            </div>
+
+            <h3>Example 2: Climate Change Research</h3>
+            <div class="example-box">
+                <h4>Prompt Customization</h4>
+                <pre>DOMAIN: Climate change mitigation and adaptation strategies
+
+CONTEXT: Academic literature review for policy recommendations, covering technological, social, and economic interventions across different scales and timeframes.</pre>
+
+                <h4>Resulting Dimensions (HLTPs)</h4>
+                <ol>
+                    <li><strong>Intervention Type</strong>: Mitigation, Adaptation, Resilience, Transformation</li>
+                    <li><strong>Scale</strong>: Individual, Community, National, Global</li>
+                    <li><strong>Sector</strong>: Energy, Transport, Agriculture, Urban</li>
+                    <li><strong>Timeframe</strong>: Immediate, Short-term, Medium-term, Long-term</li>
+                    <li><strong>Technology Level</strong>: Existing, Emerging, Experimental, Theoretical</li>
+                    <li><strong>Economic Mechanism</strong>: Market, Regulatory, Voluntary, Hybrid</li>
+                    <li><strong>Stakeholder</strong>: Government, Business, Civil Society, Academia</li>
+                    <li><strong>Co-benefits</strong>: Health, Biodiversity, Equity, Economic</li>
+                    <li><strong>Evidence Base</strong>: Proven, Promising, Theoretical, Contested</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Processing Section -->
+        <div class="section" id="processing">
+            <h2>🔧 Processing Your Taxonomy</h2>
+
+            <h3>Python Processing Script</h3>
+            <div class="prompt-box">
+                <button class="copy-button" onclick="copyPrompt('python-script')">📋 Copy Script</button>
+                <pre class="prompt-content" id="python-script">import pandas as pd
+import numpy as np
+import json
+from collections import defaultdict
+
+def load_taxonomy(file_path):
+    """Load taxonomy from TSV file"""
+    df = pd.read_csv(file_path, sep='\t')
+    return df
+
+def validate_structure(df):
+    """Validate the taxonomy structure"""
+    print("🔍 Validating Taxonomy Structure...")
+
+    # Check column names
+    expected_cols = ['HLTP', '2nd Level TE', '3rd Level TE', 'Taxon']
+    if list(df.columns) != expected_cols:
+        print(f"⚠️ Warning: Column names don't match expected: {expected_cols}")
+
+    # Count unique values at each level
+    n_hltps = df['HLTP'].nunique()
+    n_l2s = df.groupby('HLTP')['2nd Level TE'].nunique().mean()
+    n_l3s = df.groupby(['HLTP', '2nd Level TE'])['3rd Level TE'].nunique().mean()
+    n_taxa = len(df)
+
+    print(f"📊 Structure Summary:")
+    print(f"  - HLTPs: {n_hltps} (expected: 9)")
+    print(f"  - Avg L2s per HLTP: {n_l2s:.1f} (expected: 4)")
+    print(f"  - Avg L3s per L2: {n_l3s:.1f} (expected: 3)")
+    print(f"  - Total Taxa: {n_taxa} (expected: 864)")
+
+    # Check for completeness
+    if n_taxa == 864:
+        print("✅ Taxonomy is complete!")
+    else:
+        print(f"⚠️ Taxonomy has {n_taxa} taxa, expected 864")
+
+    return n_hltps, n_l2s, n_l3s, n_taxa
+
+def check_orthogonality(df):
+    """Check for potential overlaps between dimensions"""
+    print("\n🔍 Checking Orthogonality...")
+
+    hltps = df['HLTP'].unique()
+    taxa_by_hltp = {}
+
+    for hltp in hltps:
+        taxa = set(df[df['HLTP'] == hltp]['Taxon'].str.lower())
+        taxa_by_hltp[hltp] = taxa
+
+    overlaps = []
+    for i, hltp1 in enumerate(hltps):
+        for hltp2 in hltps[i+1:]:
+            common = taxa_by_hltp[hltp1] & taxa_by_hltp[hltp2]
+            if common:
+                overlaps.append((hltp1, hltp2, common))
+
+    if overlaps:
+        print("⚠️ Potential overlaps detected:")
+        for hltp1, hltp2, common in overlaps[:3]:  # Show first 3
+            print(f"  {hltp1} ↔ {hltp2}: {len(common)} common terms")
+            print(f"    Examples: {list(common)[:3]}")
+    else:
+        print("✅ No obvious overlaps detected between dimensions")
+
+def export_for_visualization(df, output_prefix='taxonomy'):
+    """Export taxonomy in various formats for visualization"""
+    print(f"\n📤 Exporting taxonomy...")
+
+    # 1. Hierarchical JSON for D3.js sunburst
+    hierarchy = {"name": "Taxonomy", "children": []}
+
+    for hltp in df['HLTP'].unique():
+        hltp_node = {"name": hltp, "children": []}
+        hltp_df = df[df['HLTP'] == hltp]
+
+        for l2 in hltp_df['2nd Level TE'].unique():
+            l2_node = {"name": l2, "children": []}
+            l2_df = hltp_df[hltp_df['2nd Level TE'] == l2]
+
+            for l3 in l2_df['3rd Level TE'].unique():
+                l3_node = {"name": l3, "children": []}
+                l3_df = l2_df[l2_df['3rd Level TE'] == l3]
+
+                for taxon in l3_df['Taxon'].unique():
+                    l3_node["children"].append({"name": taxon, "value": 1})
+
+                l2_node["children"].append(l3_node)
+            hltp_node["children"].append(l2_node)
+        hierarchy["children"].append(hltp_node)
+
+    with open(f'{output_prefix}_hierarchy.json', 'w') as f:
+        json.dump(hierarchy, f, indent=2)
+    print(f"  ✓ Saved hierarchical JSON: {output_prefix}_hierarchy.json")
+
+    # 2. Flat CSV for Excel/Sheets
+    df.to_csv(f'{output_prefix}_flat.csv', index=False)
+    print(f"  ✓ Saved flat CSV: {output_prefix}_flat.csv")
+
+    # 3. Dimension summary
+    summary = []
+    for hltp in df['HLTP'].unique():
+        hltp_df = df[df['HLTP'] == hltp]
+        summary.append({
+            'Dimension': hltp,
+            'L2_Count': hltp_df['2nd Level TE'].nunique(),
+            'L3_Count': hltp_df['3rd Level TE'].nunique(),
+            'Taxa_Count': len(hltp_df),
+            'Example_Taxa': ', '.join(hltp_df['Taxon'].head(3).tolist())
+        })
+
+    summary_df = pd.DataFrame(summary)
+    summary_df.to_csv(f'{output_prefix}_summary.csv', index=False)
+    print(f"  ✓ Saved dimension summary: {output_prefix}_summary.csv")
+
+def generate_coding_template(df, output_file='coding_template.xlsx'):
+    """Generate an Excel template for manual coding"""
+    print(f"\n📝 Generating coding template...")
+
+    # Create a matrix where rows are items to code and columns are taxa
+    template_data = {'Item_ID': [], 'Item_Description': []}
+
+    # Add all taxa as columns
+    for _, row in df.iterrows():
+        col_name = f"{row['HLTP']}_{row['2nd Level TE']}_{row['3rd Level TE']}_{row['Taxon']}"
+        template_data[col_name] = []
+
+    # Add some example rows
+    for i in range(10):
+        template_data['Item_ID'].append(f'ITEM_{i+1:03d}')
+        template_data['Item_Description'].append(f'[Description of item {i+1}]')
+        for col in template_data.keys():
+            if col not in ['Item_ID', 'Item_Description']:
+                template_data[col].append(0)  # 0 = not applicable, 1 = applicable
+
+    template_df = pd.DataFrame(template_data)
+    template_df.to_excel(output_file, index=False)
+    print(f"  ✓ Saved coding template: {output_file}")
+
+# Main execution
+if __name__ == "__main__":
+    # Load your taxonomy
+    df = load_taxonomy('taxonomy.tsv')
+
+    # Validate structure
+    validate_structure(df)
+
+    # Check orthogonality
+    check_orthogonality(df)
+
+    # Export for various uses
+    export_for_visualization(df)
+
+    # Generate coding template
+    generate_coding_template(df)
+
+    print("\n🎉 Taxonomy processing complete!")</pre>
+            </div>
+
+            <h3>R Processing Script</h3>
+            <div class="prompt-box">
+                <button class="copy-button" onclick="copyPrompt('r-script')">📋 Copy R Script</button>
+                <pre class="prompt-content" id="r-script">library(tidyverse)
+library(jsonlite)
+library(writexl)
+
+# Load taxonomy
+load_taxonomy <- function(file_path) {
+  df <- read_tsv(file_path)
+  return(df)
+}
+
+# Validate structure
+validate_structure <- function(df) {
+  cat("🔍 Validating Taxonomy Structure...\n")
+
+  n_hltps <- n_distinct(df$HLTP)
+  n_l2s <- df %>% group_by(HLTP) %>% summarise(n = n_distinct(`2nd Level TE`)) %>% pull(n) %>% mean()
+  n_taxa <- nrow(df)
+
+  cat(sprintf("  - HLTPs: %d (expected: 9)\n", n_hltps))
+  cat(sprintf("  - Avg L2s per HLTP: %.1f (expected: 4)\n", n_l2s))
+  cat(sprintf("  - Total Taxa: %d (expected: 864)\n", n_taxa))
+
+  if (n_taxa == 864) {
+    cat("✅ Taxonomy is complete!\n")
+  } else {
+    cat(sprintf("⚠️ Taxonomy has %d taxa, expected 864\n", n_taxa))
+  }
+}
+
+# Create visualization data
+create_viz_data <- function(df) {
+  # Sunburst data
+  sunburst_data <- df %>%
+    group_by(HLTP, `2nd Level TE`, `3rd Level TE`) %>%
+    summarise(count = n(), .groups = 'drop')
+
+  # Dimension summary
+  dimension_summary <- df %>%
+    group_by(HLTP) %>%
+    summarise(
+      L2_Count = n_distinct(`2nd Level TE`),
+      L3_Count = n_distinct(`3rd Level TE`),
+      Taxa_Count = n(),
+      .groups = 'drop'
+    )
+
+  return(list(sunburst = sunburst_data, summary = dimension_summary))
+}
+
+# Main execution
+df <- load_taxonomy('taxonomy.tsv')
+validate_structure(df)
+viz_data <- create_viz_data(df)
+
+# Save outputs
+write_csv(viz_data$summary, 'taxonomy_summary.csv')
+write_json(viz_data$sunburst, 'taxonomy_sunburst.json')</pre>
+            </div>
+        </div>
+
+        <!-- Validation Section -->
+        <div class="section" id="validation">
+            <h2>✅ Quality Validation Checklist</h2>
+
+            <h3>Structural Validation</h3>
+            <div class="success-box">
+                <h4>✓ Completeness Check</h4>
+                <ul>
+                    <li>☐ Exactly 9 HLTPs (dimensions)</li>
+                    <li>☐ Each HLTP has exactly 4 L2 elements</li>
+                    <li>☐ Each L2 has exactly 3 L3 elements</li>
+                    <li>☐ Each L3 has exactly 8 taxa</li>
+                    <li>☐ Total of 864 unique classification points</li>
+                </ul>
+            </div>
+
+            <h3>Orthogonality Validation</h3>
+            <div class="success-box">
+                <h4>✓ Independence Check</h4>
+                <ul>
+                    <li>☐ Each dimension addresses a different aspect</li>
+                    <li>☐ No logical dependencies between dimensions</li>
+                    <li>☐ Items can vary independently on each dimension</li>
+                    <li>☐ No redundant or overlapping dimensions</li>
+                    <li>☐ Each dimension adds unique analytical value</li>
+                </ul>
+            </div>
+
+            <h3>Practical Validation</h3>
+            <div class="success-box">
+                <h4>✓ Usability Check</h4>
+                <ul>
+                    <li>☐ Taxa are specific enough for clear classification</li>
+                    <li>☐ Terminology is appropriate for the domain</li>
+                    <li>☐ Categories follow MECE principle</li>
+                    <li>☐ Edge cases can be classified</li>
+                    <li>☐ Consistent abstraction level within each tier</li>
+                </ul>
+            </div>
+
+            <h3>Common Issues & Solutions</h3>
+            <div class="warning-box">
+                <h4>⚠️ Troubleshooting</h4>
+
+                <p><strong>Issue: Dimensions seem to overlap</strong></p>
+                <ul>
+                    <li>Solution: Reframe dimensions to focus on truly different aspects</li>
+                    <li>Example: Instead of "Complexity" and "Sophistication", use "Technical Complexity" and "Resource Requirements"</li>
+                </ul>
+
+                <p><strong>Issue: Can't find 8 taxa for some L3s</strong></p>
+                <ul>
+                    <li>Solution: Either broaden the L3 category or add emerging/potential items</li>
+                    <li>Consider: Historical, current, and future possibilities</li>
+                </ul>
+
+                <p><strong>Issue: Some dimensions don't apply to all items</strong></p>
+                <ul>
+                    <li>Solution: This is OK! Use "Not Applicable" as a valid classification</li>
+                    <li>The dimension should still be relevant to the domain overall</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tips Section -->
+        <div class="section">
+            <h2>💡 Pro Tips</h2>
+
+            <div class="info-box">
+                <h4>🚀 Maximizing AI Performance</h4>
+                <ol>
+                    <li><strong>Be specific about your domain</strong> - The more context you provide, the better the taxonomy</li>
+                    <li><strong>Include example items</strong> - Help the AI understand what you'll be classifying</li>
+                    <li><strong>Iterate if needed</strong> - If the first attempt isn't perfect, refine your prompt</li>
+                    <li><strong>Validate with real data</strong> - Test the taxonomy with 10-20 actual items</li>
+                    <li><strong>Combine manual and AI insights</strong> - Use your domain expertise to refine AI output</li>
+                </ol>
+            </div>
+
+            <div class="success-box">
+                <h4>✨ Best Practices</h4>
+                <ul>
+                    <li><strong>Start with your research questions</strong> - What do you want to discover?</li>
+                    <li><strong>Consider your analysis needs</strong> - Will you need temporal trends? Geographic patterns?</li>
+                    <li><strong>Think about visualization</strong> - How will you present your findings?</li>
+                    <li><strong>Plan for growth</strong> - Can your taxonomy accommodate new phenomena?</li>
+                    <li><strong>Document your decisions</strong> - Keep notes on why you chose specific dimensions</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Resources Section -->
+        <div class="section">
+            <h2>📚 Additional Resources</h2>
+
+            <div class="info-box">
+                <h4>🔗 Quick Links</h4>
+                <ul>
+                    <li><a href="../exercise/index.html" style="color: var(--bright-cyan);">Interactive Exercise Slides</a></li>
+                    <li><a href="../frame/index.html" style="color: var(--bright-cyan);">Building Taxonomies Presentation</a></li>
+                    <li><a href="../mdviewer/index.html?file=Taxonomy_Exercise_Instructions.md" style="color: var(--bright-cyan);">Exercise Instructions</a></li>
+                    <li><a href="https://rumilspace.app" target="_blank" style="color: var(--bright-cyan);">RuBase Dashboard (Example Implementation)</a></li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4>📖 Citation</h4>
+                <p>If you use this framework in your research, please cite:</p>
+                <pre>RuBase Team (2026). Multi-Dimensional Taxonomy Development Framework (MDTDF).
+The Hague Centre for Strategic Studies.
+Available at: https://hcss.nl/rubase/</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" onclick="scrollToTop()">↑</div>
+
+    <script>
+        // Copy functionality
+        function copyPrompt(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = '✓ Copied!';
+                button.classList.add('copied');
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                alert('Failed to copy. Please select and copy manually.');
+            });
+        }
+
+        // Copy all prompts
+        function copyAllPrompts() {
+            const mainPrompt = document.getElementById('main-prompt-text').textContent;
+            const pythonScript = document.getElementById('python-script').textContent;
+            const rScript = document.getElementById('r-script').textContent;
+
+            const allContent = `=== MAIN MDTDF PROMPT ===\n\n${mainPrompt}\n\n=== PYTHON PROCESSING SCRIPT ===\n\n${pythonScript}\n\n=== R PROCESSING SCRIPT ===\n\n${rScript}`;
+
+            navigator.clipboard.writeText(allContent).then(() => {
+                alert('All prompts and scripts copied to clipboard!');
+            }).catch(err => {
+                alert('Failed to copy. Please copy individually.');
+            });
+        }
+
+        // Scroll to top
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show/hide back to top button
+        window.addEventListener('scroll', () => {
+            const button = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                button.style.display = 'flex';
+            } else {
+                button.style.display = 'none';
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
