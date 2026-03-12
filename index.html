@@ -437,7 +437,7 @@
             <div class="day-title">DISCOVER</div>
             <div class="day-subtitle">Finding What You've Been Missing</div>
         </div>
-        <div class="day-item day2" onclick="loadDay(2)">
+        <div class="day-item day2 active" onclick="loadDay(2)">
             <div class="day-number">2</div>
             <div class="day-title">FRAME</div>
             <div class="day-subtitle">Building Rigorous Analytical Pipelines</div>
@@ -712,8 +712,14 @@
         }
 
         function loadDay(dayNumber) {
-            if (dayNumber === 2 || dayNumber === 3) {
-                alert(`Day ${dayNumber} will be unlocked on ${dayNumber === 2 ? 'Thursday' : 'Friday'}!`);
+            // Day 2 is now unlocked!
+            if (dayNumber === 2) {
+                window.location.href = 'modules/frame/index.html';
+                return;
+            }
+
+            if (dayNumber === 3) {
+                alert(`Day 3 will be unlocked on Friday!`);
                 return;
             }
 
