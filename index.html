@@ -714,7 +714,8 @@
         function loadDay(dayNumber) {
             // Day 2 is now unlocked!
             if (dayNumber === 2) {
-                window.location.href = 'modules/frame/index.html';
+                // Show Day 2 schedule in markdown viewer
+                window.location.href = 'modules/mdviewer/index.html?file=Day2_Schedule.md&return=../../index.html';
                 return;
             }
 
