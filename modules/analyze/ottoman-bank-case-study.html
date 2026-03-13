@@ -7,10 +7,24 @@
     
     <link rel="stylesheet" href="slides.css">
 
-    
+    <!-- EMERGENCY CSS FIXES -->
+    <style>
+        .slide {
+            background: linear-gradient(135deg, #1a2a4a 0%, #243655 100%) !important;
+            color: white !important;
+        }
+        .slide h1, .slide h2, .slide h3, .slide h4, .slide p, .slide li, .slide div {
+            color: white !important;
+        }
+        .slide.active {
+            display: block !important;
+        }
+        .slide.title-slide.active {
+            display: flex !important;
+        }
+    </style>
 </head>
 <body>
-    <div class="presentation-container">
         <!-- Slide 1: Title -->
         <div class="slide active title-slide">
             <h1>Ottoman Bank Case Study</h1>
@@ -682,7 +696,6 @@ themes = analyze_themes(abstracts)
 
             <div class="slide-number">16 / 16</div>
         </div>
-    </div>
 
     <!-- Navigation -->
     <div class="navigation">
