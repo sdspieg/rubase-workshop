@@ -449,7 +449,7 @@
             <div class="day-title">FRAME</div>
             <div class="day-subtitle">Building Rigorous Analytical Pipelines</div>
         </div>
-        <div class="day-item day3 locked" onclick="loadDay(3)">
+        <div class="day-item day3 active" onclick="loadDay(3)">
             <div class="day-number">3</div>
             <div class="day-title">ANALYZE</div>
             <div class="day-subtitle">From Frameworks to Findings</div>
@@ -754,7 +754,8 @@
 
         function loadDay(dayNumber) {
             if (dayNumber === 3) {
-                alert(`Day 3 will be unlocked on Friday!`);
+                // Navigate to Day 3 ANALYZE module
+                window.location.href = 'modules/analyze/index.html';
                 return;
             }
 
