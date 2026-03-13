@@ -2,15 +2,34 @@
 
 ## Immediate Tasks
 
-### 1. Fix CLI LLMs Slideshow Styling
-**Status**: NEEDS FIXING
-**Issue**: Using wrong color scheme (purple gradients instead of dark blue)
-**Action Required**:
-- Change background from purple gradient to dark blue: `linear-gradient(135deg, #1a2a4a 0%, #243655 100%)`
-- Fix text colors to white/cyan scheme
-- Match styling with other presentations
+### 1. Create Welcome/Schedule Slideshow
+**Status**: NOT STARTED
+**Requirements**:
+- Opening slidedeck with workshop schedule
+- Currently placeholder content
+- Highlight key discovery points:
+  - Bibliographic vs fulltext academic sources
+  - Corpora resources
+  - Official websites and other sources
+  - Google search with ParseHub
+  - LLMs as a jury for verification
 
-### 2. Complete Voice/Talk Feature Documentation
+### 2. Tana-CLI Integration Documentation
+**Status**: NOT DOCUMENTED
+**Key Points to Cover**:
+- Integration with personal knowledge management tools
+- If working in CLI with Tana hookup:
+  - Automatically attaches notes to today's daily notes
+  - Seamless workflow between CLI and PKM
+- Benefits for research workflow
+- Setup instructions
+
+### 3. Fix CLI LLMs Slideshow Styling
+**Status**: COMPLETED ✓
+**Issue**: Was using wrong color scheme (purple gradients instead of dark blue)
+**Resolution**: Changed to match dark blue theme
+
+### 4. Complete Voice/Talk Feature Documentation
 **Status**: PARTIALLY COMPLETE
 **Current State**: Voice input mentioned in CLI slideshow (slide about voice messages)
 **Still Needed**:
@@ -20,12 +39,39 @@
 
 ## Content to Add/Verify
 
+### Discovery Methods to Emphasize
+**For Welcome/Overview Slideshow**:
+1. **Bibliographic vs Fulltext Academic**
+   - OpenAlex for bibliographic metadata
+   - Distinction between citations and full content
+   - When to use each approach
+
+2. **Corpora Resources**
+   - Pre-built text collections
+   - Domain-specific databases
+   - How to access and utilize
+
+3. **Official Websites & Other Sources**
+   - Government databases
+   - Organization repositories
+   - Primary source materials
+
+4. **Google Search with ParseHub**
+   - Web scraping capabilities
+   - Structured data extraction
+   - Automation possibilities
+
+5. **LLMs as a Jury**
+   - Cross-verification strategies
+   - Multiple LLM consensus approaches
+   - Fact-checking methodologies
+
 ### CLI LLMs Slideshow Content Checklist
 - [x] Voice input capability mentioned
-- [ ] MD documentation requirements (CLAUDE.md, GEMINI.md, etc.)
-- [ ] Integration with Tana and other tools
-- [ ] Monorepo best practices
-- [ ] Ancestor/descendant loading patterns
+- [x] MD documentation requirements (CLAUDE.md, GEMINI.md, AGENTS.md) - DONE
+- [ ] Integration with Tana and other PKM tools - NEEDS EXPANSION
+- [x] Monorepo best practices - MENTIONED
+- [x] Ancestor/descendant loading patterns - MENTIONED
 
 ### Workshop Philosophy Documentation
 **Location**: Should be prominent in materials
@@ -112,9 +158,32 @@ Before marking module complete:
 3. "Can we talk to the CLI tools?"
    - Answer: Yes, voice input is supported
 
+## Key Integration Points to Document
+
+### Tana x CLI Integration
+**Critical Feature**: When you work in CLI and have it hooked up to Tana:
+- Automatically attaches the session notes to today's daily notes
+- Creates proper backlinks and references
+- Maintains context across tools
+- Enables seamless research workflow
+
+**Benefits**:
+- Never lose track of what you worked on
+- Automatic documentation of research process
+- Cross-referenced knowledge base
+- Time-stamped progress tracking
+
+### Other PKM Integrations
+- Obsidian integration possibilities
+- Notion API connections
+- Roam Research workflows
+- LogSeq compatibility
+
 ## Priority Order for Completion
 
-1. **URGENT**: Fix CLI slideshow styling
-2. **HIGH**: Verify all content fits properly
-3. **MEDIUM**: Expand voice/talk documentation
-4. **LOW**: Future enhancements
+1. **URGENT**: Create Welcome/Schedule slideshow with discovery emphasis
+2. **HIGH**: Document Tana-CLI integration fully
+3. **HIGH**: Verify all content fits properly on slides
+4. **MEDIUM**: Expand voice/talk documentation
+5. **MEDIUM**: Add ParseHub tutorial/examples
+6. **LOW**: Future enhancements
