@@ -24,12 +24,12 @@
 
         .slide {
             display: none;
-            width: 92%;
-            max-width: 1400px;
-            height: 88vh;
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            width: 96%;
+            max-width: 1600px;
+            height: 94vh;
+            background: linear-gradient(135deg, #1a2a4a 0%, #243655 100%);
             border-radius: 20px;
-            padding: 50px 60px;
+            padding: 30px 40px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
             overflow-y: auto;
             animation: slideIn 0.5s ease-out;
@@ -59,26 +59,24 @@
         }
 
         h1 {
-            color: #333;
+            color: #ffffff;
             font-size: 3em;
             margin-bottom: 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
             text-align: center;
         }
 
         h2 {
-            color: #444;
+            color: #00ffff;
             font-size: 2.2em;
             margin-bottom: 25px;
             padding-bottom: 15px;
-            border-bottom: 3px solid #667eea;
+            border-bottom: 3px solid #00ffff;
         }
 
         h3 {
-            color: #555;
+            color: #ffffff;
+            opacity: 0.95;
             font-size: 1.6em;
             margin: 25px 0 15px 0;
             font-weight: 600;
@@ -86,14 +84,16 @@
 
         .subtitle {
             font-size: 1.5em;
-            color: #666;
+            color: #ffffff;
+            opacity: 0.9;
             margin-bottom: 20px;
         }
 
         p {
             font-size: 1.1em;
             line-height: 1.8;
-            color: #555;
+            color: #ffffff;
+            opacity: 0.95;
             margin-bottom: 15px;
         }
 
@@ -105,7 +105,8 @@
         li {
             font-size: 1.1em;
             line-height: 1.8;
-            color: #555;
+            color: #ffffff;
+            opacity: 0.95;
             margin-bottom: 12px;
         }
 
@@ -202,8 +203,8 @@
         }
 
         .comparison-table th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #2a4a5a, #3a5a6a);
+            color: #00ffff;
             padding: 15px;
             text-align: left;
             font-weight: 600;
@@ -211,12 +212,13 @@
 
         .comparison-table td {
             padding: 15px;
-            border-bottom: 1px solid #e0e0e0;
-            background: white;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            background: transparent;
+            color: #ffffff;
         }
 
         .comparison-table tr:hover td {
-            background: #f5f5f5;
+            background: rgba(42, 74, 90, 0.3);
         }
 
         .nav-container {
