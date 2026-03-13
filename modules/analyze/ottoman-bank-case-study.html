@@ -12,15 +12,40 @@
         .slide {
             background: linear-gradient(135deg, #1a2a4a 0%, #243655 100%) !important;
             color: white !important;
+            width: 96% !important;
+            max-width: 1600px !important;
+            height: 94vh !important;
+            min-height: 600px !important;
+            padding: 35px 45px !important;
+            border-radius: 20px !important;
+            overflow-y: auto !important;
+            position: relative !important;
         }
         .slide h1, .slide h2, .slide h3, .slide h4, .slide p, .slide li, .slide div {
             color: white !important;
+            width: auto !important;
+            height: auto !important;
+            min-height: auto !important;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
         }
         .slide.active {
             display: block !important;
+            visibility: visible !important;
         }
         .slide.title-slide.active {
             display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+            text-align: center !important;
+        }
+        /* Force body layout */
+        body {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
         }
     </style>
 </head>
