@@ -141,6 +141,21 @@ claude ~/projects/my-app  # ✗ Wrong - loses context
 
             <p style="margin-top: 20px;"><strong>Pro tip for monorepos:</strong> Use multiple CLAUDE.md files with ancestor + descendant loading pattern.</p>
         </div>
+
+        <div class="warning-box">
+            <h4>Understanding Memory Storage</h4>
+            <p><strong>Two Types of Memory:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>General Memory (Claude's servers):</strong> Cross-session, personal preferences, general instructions</li>
+                <li><strong>Project Memory (Local files):</strong> CLAUDE.md, GEMINI.md, AGENTS.md in your project folder</li>
+            </ul>
+            <p><strong>Key Differences:</strong></p>
+            <ul>
+                <li><strong>General:</strong> Always loaded, personal to your account, stored remotely</li>
+                <li><strong>Project:</strong> Only when in that directory, version-controlled with Git, shareable with team</li>
+            </ul>
+            <p style="margin-top: 15px;"><em>This applies to all CLI tools - they all have both global settings and project-specific configurations.</em></p>
+        </div>
     </div>
 
     <!-- Slide 5: Universal Best Practices 3-5 -->
