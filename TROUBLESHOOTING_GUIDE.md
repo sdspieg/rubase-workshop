@@ -146,6 +146,25 @@ echo "large_file.json" >> .gitignore
 
 ## Python/Library Issues
 
+### EOF Error with input() in Scripts
+- **Problem**: `EOFError: EOF when reading a line` when using `input()` in scripts run with timeout
+- **Cause**: The `timeout` command closes stdin, so `input()` can't read user input
+- **Solution**:
+  1. Don't use `input()` in automated scripts
+  2. Use a flag or environment variable to control browser visibility
+  3. Or just let the script complete normally without waiting
+```python
+# Wrong
+input("Press Enter to close browser...")
+
+# Right - for debugging
+import os
+if os.environ.get('DEBUG'):
+    input("Press Enter to close browser...")
+else:
+    browser.close()
+```
+
 ### python-pptx Shape Iteration
 - **Problem**: `for shape in slide.shapes[:3]` causes AttributeError
 - **Solution**: Iterate directly without slicing
