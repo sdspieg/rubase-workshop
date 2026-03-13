@@ -114,6 +114,37 @@ for i, shape in enumerate(slide.shapes):
 **Example**: Sky blue (#87ceeb) on dark blue (#1a2a4a) = 8.18:1 ratio but hard to read
 **Solution**: Use colors with different hues, white/cyan on dark backgrounds
 
+## Voice Input for CLI Tools
+
+### How to "Send Voice Messages" from a Computer
+**Issue**: Documentation says "just send voice messages" but doesn't explain HOW
+**Solution**: Use your OS's built-in voice-to-text features
+
+#### Platform-Specific Methods:
+1. **macOS**:
+   - Press Fn key twice to activate dictation
+   - Speak naturally
+   - Text appears in terminal
+   - Press Enter to send to CLI
+
+2. **Windows**:
+   - Press Win+H for voice typing
+   - Dictate your command
+   - Windows converts speech to text
+   - Send to CLI tool
+
+3. **Linux**:
+   - Install tools like `nerd-dictation` or `whisper.cpp`
+   - Configure hotkeys for voice input
+   - Or use browser-based speech-to-text
+
+4. **Universal Alternative**:
+   - Use phone's voice-to-text in any app
+   - Copy the transcribed text
+   - Paste into terminal
+
+**Important**: This is voice-to-text conversion, not actual audio. The CLI tools receive text input that was generated from your voice.
+
 ## Testing & Verification Commands
 
 ### Verify Slides Work
