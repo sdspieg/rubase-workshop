@@ -503,47 +503,11 @@ li {
     }
 }
 
-/* Image-based slide styling (for WACKO presentation) */
+/* Basic image styling for any slide images */
 .slide img {
     max-width: 100%;
-    max-height: calc(94vh - 120px); /* Account for padding and navigation */
     height: auto;
-    width: auto;
     display: block;
     margin: 0 auto;
     object-fit: contain;
-}
-
-/* Presentation container for image slides */
-.presentation-container {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-}
-
-/* Image slide specific styling - ONLY for WACKO presentation */
-body:has(.presentation-container) .slide[data-slide] {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #1a2a4a 0%, #243655 100%);
-}
-
-body:has(.presentation-container) .slide[data-slide].active {
-    display: flex;
-}
-
-body:has(.presentation-container) .slide[data-slide] img {
-    max-width: calc(100% - 40px);
-    max-height: calc(100vh - 160px);
-    object-fit: contain;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
