@@ -522,8 +522,8 @@ li {
     overflow: hidden;
 }
 
-/* Image slide specific styling */
-.slide[data-slide] {
+/* Image slide specific styling - ONLY for WACKO presentation */
+body:has(.presentation-container) .slide[data-slide] {
     display: none;
     position: absolute;
     top: 0;
@@ -536,11 +536,11 @@ li {
     background: linear-gradient(135deg, #1a2a4a 0%, #243655 100%);
 }
 
-.slide[data-slide].active {
+body:has(.presentation-container) .slide[data-slide].active {
     display: flex;
 }
 
-.slide[data-slide] img {
+body:has(.presentation-container) .slide[data-slide] img {
     max-width: calc(100% - 40px);
     max-height: calc(100vh - 160px);
     object-fit: contain;
