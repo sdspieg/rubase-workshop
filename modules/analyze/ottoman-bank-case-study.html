@@ -7,49 +7,10 @@
     
     <link rel="stylesheet" href="slides.css">
 
-    <!-- EMERGENCY CSS FIXES -->
-    <style>
-        .slide {
-            background: linear-gradient(135deg, #1a2a4a 0%, #243655 100%) !important;
-            color: white !important;
-            width: 96% !important;
-            max-width: 1600px !important;
-            height: 94vh !important;
-            min-height: 600px !important;
-            padding: 35px 45px !important;
-            border-radius: 20px !important;
-            overflow-y: auto !important;
-            position: relative !important;
-        }
-        .slide h1, .slide h2, .slide h3, .slide h4, .slide p, .slide li, .slide div {
-            color: white !important;
-            width: auto !important;
-            height: auto !important;
-            min-height: auto !important;
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-        }
-        .slide.active {
-            display: block !important;
-            visibility: visible !important;
-        }
-        .slide.title-slide.active {
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: center !important;
-            align-items: center !important;
-            text-align: center !important;
-        }
-        /* Force body layout */
-        body {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-        }
-    </style>
+    
 </head>
 <body>
+    <div class="presentation-container">
         <!-- Slide 1: Title -->
         <div class="slide active title-slide">
             <h1>Ottoman Bank Case Study</h1>
@@ -721,6 +682,7 @@ themes = analyze_themes(abstracts)
 
             <div class="slide-number">16 / 16</div>
         </div>
+    </div>
 
     <!-- Navigation -->
     <div class="navigation">
@@ -731,30 +693,30 @@ themes = analyze_themes(abstracts)
     </div>
 
     <script>
-        window.currentSlide = 0;
+        let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
-        window.totalSlides = slides.length;
+        const totalSlides = slides.length;
 
         function showSlide(n) {
             slides.forEach(slide => slide.classList.remove('active'));
 
-            if (n >= window.totalSlides) {
-                window.currentSlide = window.totalSlides - 1;
+            if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
             } else if (n < 0) {
-                window.currentSlide = 0;
+                currentSlide = 0;
             } else {
-                window.currentSlide = n;
+                currentSlide = n;
             }
 
-            slides[window.currentSlide].classList.add('active');
+            slides[currentSlide].classList.add('active');
 
             // Update navigation buttons
-            document.getElementById('prevBtn').disabled = window.currentSlide === 0;
-            document.getElementById('nextBtn').disabled = window.currentSlide === window.totalSlides - 1;
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
         }
 
         function changeSlide(direction) {
-            showSlide(window.currentSlide + direction);
+            showSlide(currentSlide + direction);
         }
 
         // Keyboard navigation
@@ -766,7 +728,7 @@ themes = analyze_themes(abstracts)
             } else if (e.key === 'Home') {
                 showSlide(0);
             } else if (e.key === 'End') {
-                showSlide(window.totalSlides - 1);
+                showSlide(totalSlides - 1);
             }
         });
 
