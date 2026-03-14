@@ -769,42 +769,93 @@
             document.getElementById('welcomeScreen').style.display = 'none';
 
             // Show content area with day-specific content
-            if (dayNumber === 3) {
-                // Show Day 3 content in the main content area
-                const contentArea = document.getElementById('contentArea');
-                // Hide welcome screen and show Day 3 specific content
-                contentArea.innerHTML = `
-                    <div style="padding: 40px; color: var(--text-primary);">
-                        <h1 style="color: var(--accent-green); font-size: 2.5rem; margin-bottom: 20px;">Day 3: ANALYZE</h1>
-                        <h2 style="color: var(--text-secondary); margin-bottom: 30px;">From Frameworks to Findings</h2>
+            const contentArea = document.getElementById('contentArea');
 
-                        <div style="background: var(--secondary-bg); padding: 30px; border-radius: 12px; margin-bottom: 30px;">
-                            <h3 style="color: var(--accent-cyan); margin-bottom: 20px;">📚 Available Presentations</h3>
-                            <p style="line-height: 1.8; color: var(--text-secondary);">
-                                Click on any presentation in the sidebar to begin. All materials for Day 3 focus on
-                                advanced analysis techniques using CLI tools and LLMs.
-                            </p>
+            if (dayNumber === 1) {
+                // Show Day 1 content
+                contentArea.innerHTML = `
+                    <div class="welcome-screen">
+                        <h1 class="welcome-title">Day 1: DISCOVER</h1>
+                        <p class="welcome-subtitle">Finding What You've Been Missing - Introduction to RuBase Research Methods</p>
+
+                        <div class="quick-start-grid">
+                            <div class="quick-start-card" onclick="window.location.href='modules/welcome/index.html'">
+                                <div class="quick-start-icon">👋</div>
+                                <div class="quick-start-title">Welcome & Setup</div>
+                                <div class="quick-start-desc">Get started with the workshop environment</div>
+                            </div>
+                            <div class="quick-start-card" onclick="window.location.href='modules/openalex/index.html'">
+                                <div class="quick-start-icon">🔍</div>
+                                <div class="quick-start-title">OpenAlex Explorer</div>
+                                <div class="quick-start-desc">Interactive bibliometric discovery tool</div>
+                            </div>
+                            <div class="quick-start-card" onclick="window.location.href='modules/resources/index.html'">
+                                <div class="quick-start-icon">📚</div>
+                                <div class="quick-start-title">Resources & Guides</div>
+                                <div class="quick-start-desc">Documentation and reference materials</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (dayNumber === 2) {
+                // Show Day 2 content
+                contentArea.innerHTML = `
+                    <div class="welcome-screen">
+                        <h1 class="welcome-title">Day 2: FRAME</h1>
+                        <p class="welcome-subtitle">Building Rigorous Analytical Pipelines - Data Collection & Taxonomy Development</p>
+
+                        <div class="quick-start-grid">
+                            <div class="quick-start-card" onclick="window.location.href='modules/cartography/index.html'">
+                                <div class="quick-start-icon">🗺️</div>
+                                <div class="quick-start-title">Knowledge Cartography</div>
+                                <div class="quick-start-desc">Map your research landscape</div>
+                            </div>
+                            <div class="quick-start-card" onclick="window.location.href='modules/frame/index.html'">
+                                <div class="quick-start-icon">🎯</div>
+                                <div class="quick-start-title">Building Taxonomies</div>
+                                <div class="quick-start-desc">Create structured classification systems</div>
+                            </div>
+                            <div class="quick-start-card" onclick="window.location.href='modules/exercise/index.html'">
+                                <div class="quick-start-icon">📝</div>
+                                <div class="quick-start-title">Hands-On Exercise</div>
+                                <div class="quick-start-desc">Practice with real research data</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (dayNumber === 3) {
+                // Show Day 3 content in the main content area (similar to landing page style)
+                const contentArea = document.getElementById('contentArea');
+                contentArea.innerHTML = `
+                    <div class="welcome-screen">
+                        <h1 class="welcome-title">Day 3: ANALYZE</h1>
+                        <p class="welcome-subtitle">From Frameworks to Findings - Advanced Analysis with CLI Tools & LLMs</p>
+
+                        <div class="quick-start-grid">
+                            <div class="quick-start-card" onclick="window.location.href='modules/analyze/ottoman-bank-case-study.html'">
+                                <div class="quick-start-icon">🏛️</div>
+                                <div class="quick-start-title">Ottoman Bank Case Study</div>
+                                <div class="quick-start-desc">Real-world research analysis walkthrough</div>
+                            </div>
+                            <div class="quick-start-card" onclick="window.location.href='modules/analyze/cli-llms-guide.html'">
+                                <div class="quick-start-icon">💻</div>
+                                <div class="quick-start-title">CLI LLMs Guide</div>
+                                <div class="quick-start-desc">Master command-line AI tools for research</div>
+                            </div>
+                            <div class="quick-start-card" onclick="window.location.href='modules/analyze/deep-research-guide.html'">
+                                <div class="quick-start-icon">🔍</div>
+                                <div class="quick-start-title">Deep Research Guide</div>
+                                <div class="quick-start-desc">Advanced techniques for comprehensive analysis</div>
+                            </div>
                         </div>
 
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
-                            <div style="background: linear-gradient(135deg, rgba(0,255,255,0.1), rgba(148,0,211,0.1)); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color);">
-                                <h4 style="color: var(--accent-yellow); margin-bottom: 10px;">🎯 Core Content</h4>
-                                <ul style="list-style: none; padding: 0;">
-                                    <li style="padding: 8px 0;">• Ottoman Bank Case Study</li>
-                                    <li style="padding: 8px 0;">• CLI LLMs Guide</li>
-                                    <li style="padding: 8px 0;">• Deep Research Methods</li>
-                                    <li style="padding: 8px 0;">• WACKO Strategic Analysis</li>
-                                </ul>
-                            </div>
-                            <div style="background: linear-gradient(135deg, rgba(0,255,127,0.1), rgba(255,215,0,0.1)); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color);">
-                                <h4 style="color: var(--accent-green); margin-bottom: 10px;">📦 Resources</h4>
-                                <ul style="list-style: none; padding: 0;">
-                                    <li style="padding: 8px 0;">• Workshop Package</li>
-                                    <li style="padding: 8px 0;">• CLI Setup Guide</li>
-                                    <li style="padding: 8px 0;">• Scripts & Data</li>
-                                    <li style="padding: 8px 0;">• Documentation</li>
-                                </ul>
-                            </div>
+                        <div style="margin-top: 50px; padding: 30px; background: var(--secondary-bg); border-radius: 15px; border: 1px solid var(--border-color);">
+                            <h3 style="color: var(--accent-green); margin-bottom: 15px;">✅ Module 3: Complete & Ready!</h3>
+                            <p style="color: var(--text-secondary); line-height: 1.8;">
+                                All presentations and materials are now available for Day 3. Click on any presentation
+                                in the sidebar or the cards above to begin your journey into advanced research analysis
+                                using cutting-edge CLI tools and LLM techniques.
+                            </p>
                         </div>
                     </div>
                 `;
