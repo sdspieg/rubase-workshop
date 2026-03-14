@@ -753,12 +753,6 @@
         }
 
         function loadDay(dayNumber) {
-            if (dayNumber === 3) {
-                // Navigate to Day 3 ANALYZE module
-                window.location.href = 'modules/analyze/index.html';
-                return;
-            }
-
             // Update current day
             WORKSHOP.currentDay = dayNumber;
 
@@ -773,6 +767,48 @@
 
             // Hide welcome screen if visible
             document.getElementById('welcomeScreen').style.display = 'none';
+
+            // Show content area with day-specific content
+            if (dayNumber === 3) {
+                // Show Day 3 content in the main content area
+                const contentArea = document.getElementById('contentArea');
+                // Hide welcome screen and show Day 3 specific content
+                contentArea.innerHTML = `
+                    <div style="padding: 40px; color: var(--text-primary);">
+                        <h1 style="color: var(--accent-green); font-size: 2.5rem; margin-bottom: 20px;">Day 3: ANALYZE</h1>
+                        <h2 style="color: var(--text-secondary); margin-bottom: 30px;">From Frameworks to Findings</h2>
+
+                        <div style="background: var(--secondary-bg); padding: 30px; border-radius: 12px; margin-bottom: 30px;">
+                            <h3 style="color: var(--accent-cyan); margin-bottom: 20px;">📚 Available Presentations</h3>
+                            <p style="line-height: 1.8; color: var(--text-secondary);">
+                                Click on any presentation in the sidebar to begin. All materials for Day 3 focus on
+                                advanced analysis techniques using CLI tools and LLMs.
+                            </p>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                            <div style="background: linear-gradient(135deg, rgba(0,255,255,0.1), rgba(148,0,211,0.1)); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color);">
+                                <h4 style="color: var(--accent-yellow); margin-bottom: 10px;">🎯 Core Content</h4>
+                                <ul style="list-style: none; padding: 0;">
+                                    <li style="padding: 8px 0;">• Ottoman Bank Case Study</li>
+                                    <li style="padding: 8px 0;">• CLI LLMs Guide</li>
+                                    <li style="padding: 8px 0;">• Deep Research Methods</li>
+                                    <li style="padding: 8px 0;">• WACKO Strategic Analysis</li>
+                                </ul>
+                            </div>
+                            <div style="background: linear-gradient(135deg, rgba(0,255,127,0.1), rgba(255,215,0,0.1)); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color);">
+                                <h4 style="color: var(--accent-green); margin-bottom: 10px;">📦 Resources</h4>
+                                <ul style="list-style: none; padding: 0;">
+                                    <li style="padding: 8px 0;">• Workshop Package</li>
+                                    <li style="padding: 8px 0;">• CLI Setup Guide</li>
+                                    <li style="padding: 8px 0;">• Scripts & Data</li>
+                                    <li style="padding: 8px 0;">• Documentation</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
         }
 
         function updateSidebar(dayNumber) {
@@ -867,6 +903,68 @@
                         <div class="module-header" onclick="window.open('https://rumilspace.app', '_blank')" style="cursor: pointer;">
                             <span class="module-title">🌐 RuBase Dashboard</span>
                             <span style="font-size: 0.8rem;">↗</span>
+                        </div>
+                    </li>
+                `;
+            } else if (dayNumber === 3) {
+                // Day 3 schedule items
+                sidebarHTML += `
+                    <li class="module-item">
+                        <div class="module-header" onclick="window.location.href='modules/mdviewer/index.html?file=Day3_Schedule.md'" style="cursor: pointer;">
+                            <span class="module-title">👋 Day 3 Welcome</span>
+                        </div>
+                    </li>
+                    <li class="module-item">
+                        <div class="module-header" onclick="window.location.href='modules/analyze/ottoman-bank-case-study.html'" style="cursor: pointer;">
+                            <span class="module-title">🏛️ Ottoman Bank Case Study</span>
+                            <span style="background: linear-gradient(135deg, var(--bright-green), var(--bright-cyan)); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; color: var(--dark-bg);">Slides</span>
+                        </div>
+                    </li>
+                    <li class="module-item">
+                        <div class="module-header" onclick="window.location.href='modules/analyze/cli-llms-guide.html'" style="cursor: pointer;">
+                            <span class="module-title">💻 CLI LLMs Guide</span>
+                            <span style="background: linear-gradient(135deg, var(--bright-purple), var(--bright-cyan)); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; color: var(--dark-bg);">Slides</span>
+                        </div>
+                    </li>
+                    <li class="module-item">
+                        <div class="module-header" onclick="window.location.href='modules/analyze/deep-research-guide.html'" style="cursor: pointer;">
+                            <span class="module-title">🔍 Deep Research Guide</span>
+                            <span style="background: linear-gradient(135deg, var(--bright-yellow), var(--bright-green)); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; color: var(--dark-bg);">Slides</span>
+                        </div>
+                    </li>
+                    <li class="module-item">
+                        <div class="module-header" onclick="window.location.href='modules/analyze/wacko.html'" style="cursor: pointer;">
+                            <span class="module-title">🎯 WACKO Presentation</span>
+                            <span style="background: linear-gradient(135deg, var(--bright-orange), var(--bright-red)); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; color: var(--dark-bg);">Slides</span>
+                        </div>
+                    </li>
+                    <li class="module-item">
+                        <div class="module-header" onclick="window.location.href='modules/mdviewer/index.html?file=Day3_Schedule.md'" style="cursor: pointer;">
+                            <span class="module-title">📊 Data Visualization</span>
+                        </div>
+                    </li>
+                    <li class="module-item">
+                        <div class="module-header" onclick="window.location.href='Day3_Workshop_Package/'" style="cursor: pointer;">
+                            <span class="module-title">📦 Workshop Package</span>
+                            <span style="background: linear-gradient(135deg, var(--bright-green), var(--bright-yellow)); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; color: var(--dark-bg);">Download</span>
+                        </div>
+                    </li>
+                    <li class="module-item">
+                        <div class="module-header" onclick="window.location.href='modules/mdviewer/index.html?file=CLI_LLM_Setup_Guide.md'" style="cursor: pointer;">
+                            <span class="module-title">🛠️ CLI Setup Guide</span>
+                        </div>
+                    </li>
+                `;
+                // Add quick links for Day 3
+                sidebarHTML += `
+                    <li class="module-item" style="margin-top: 20px; border-top: 1px solid rgba(0,255,255,0.2); padding-top: 20px;">
+                        <div class="module-header" onclick="window.location.href='modules/resources/index.html'" style="cursor: pointer;">
+                            <span class="module-title">📚 All Resources</span>
+                        </div>
+                    </li>
+                    <li class="module-item">
+                        <div class="module-header" onclick="window.location.href='modules/techhelp/index.html'" style="cursor: pointer;">
+                            <span class="module-title">❓ Technical Help</span>
                         </div>
                     </li>
                 `;
