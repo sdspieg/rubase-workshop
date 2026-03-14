@@ -765,11 +765,14 @@
             // Update sidebar with new day's modules
             updateSidebar(dayNumber);
 
-            // Hide welcome screen if visible
-            document.getElementById('welcomeScreen').style.display = 'none';
-
             // Show content area with day-specific content
             const contentArea = document.getElementById('contentArea');
+
+            // Hide the main welcome screen if it exists
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            if (welcomeScreen) {
+                welcomeScreen.style.display = 'none';
+            }
 
             if (dayNumber === 1) {
                 // Show Day 1 content
@@ -825,7 +828,6 @@
                 `;
             } else if (dayNumber === 3) {
                 // Show Day 3 content in the main content area (similar to landing page style)
-                const contentArea = document.getElementById('contentArea');
                 contentArea.innerHTML = `
                     <div class="welcome-screen">
                         <h1 class="welcome-title">Day 3: ANALYZE</h1>
