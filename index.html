@@ -463,7 +463,7 @@
             <h3 style="color: var(--accent-cyan); margin-bottom: 20px;">DAY 1: DISCOVER</h3>
             <ul class="module-list">
                 <li class="module-item">
-                    <div class="module-header" onclick="window.location.href='modules/welcome/index.html'" style="cursor: pointer;">
+                    <div class="module-header" onclick="window.location.href='modules/welcome/welcome-setup.html'" style="cursor: pointer;">
                         <span class="module-title">Welcome & Setup</span>
                     </div>
                 </li>
@@ -579,9 +579,9 @@
                     title: 'Welcome & Setup',
                     presenter: 'Adam',
                     sections: {
-                        'overview': './modules/welcome/index.html',
-                        'schedule': './modules/welcome/index.html',
-                        'resources': './modules/welcome/index.html'
+                        'overview': './modules/welcome/welcome-setup.html',
+                        'schedule': './modules/welcome/welcome-setup.html',
+                        'resources': './modules/welcome/welcome-setup.html'
                     }
                 },
                 'rubase': {
@@ -599,7 +599,7 @@
                     sections: {
                         'fundamentals': 'slides/biblio-fundamentals.html',
                         'lens': 'slides/biblio-lens.html',
-                        'openalex': './modules/openalex/index.html'
+                        'openalex': './modules/openalex/openalex-explorer.html'
                     }
                 },
                 'corpus': {
@@ -625,7 +625,7 @@
                 'taxonomies': {
                     title: 'Multi-Dimensional Taxonomies',
                     time: '7:15 PM - 8:30 PM',
-                    url: './modules/frame/index.html'
+                    url: './modules/frame/building-taxonomies.html'
                 },
                 'exercise': {
                     title: 'Hands-On Exercise',
@@ -782,12 +782,12 @@
                         <p class="welcome-subtitle">Finding What You've Been Missing - Introduction to RuBase Research Methods</p>
 
                         <div class="quick-start-grid">
-                            <div class="quick-start-card" onclick="window.location.href='modules/welcome/index.html'">
+                            <div class="quick-start-card" onclick="window.location.href='modules/welcome/welcome-setup.html'">
                                 <div class="quick-start-icon">👋</div>
                                 <div class="quick-start-title">Welcome & Setup</div>
                                 <div class="quick-start-desc">Get started with the workshop environment</div>
                             </div>
-                            <div class="quick-start-card" onclick="window.location.href='modules/openalex/index.html'">
+                            <div class="quick-start-card" onclick="window.location.href='modules/openalex/openalex-explorer.html'">
                                 <div class="quick-start-icon">🔍</div>
                                 <div class="quick-start-title">OpenAlex Explorer</div>
                                 <div class="quick-start-desc">Interactive bibliometric discovery tool</div>
@@ -808,17 +808,17 @@
                         <p class="welcome-subtitle">Building Rigorous Analytical Pipelines - Data Collection & Taxonomy Development</p>
 
                         <div class="quick-start-grid">
-                            <div class="quick-start-card" onclick="window.location.href='modules/cartography/index.html'">
+                            <div class="quick-start-card" onclick="window.location.href='modules/cartography/knowledge-cartography.html'">
                                 <div class="quick-start-icon">🗺️</div>
                                 <div class="quick-start-title">Knowledge Cartography</div>
                                 <div class="quick-start-desc">Map your research landscape</div>
                             </div>
-                            <div class="quick-start-card" onclick="window.location.href='modules/frame/index.html'">
+                            <div class="quick-start-card" onclick="window.location.href='modules/frame/building-taxonomies.html'">
                                 <div class="quick-start-icon">🎯</div>
                                 <div class="quick-start-title">Building Taxonomies</div>
                                 <div class="quick-start-desc">Create structured classification systems</div>
                             </div>
-                            <div class="quick-start-card" onclick="window.location.href='modules/exercise/index.html'">
+                            <div class="quick-start-card" onclick="window.location.href='modules/exercise/hands-on-exercise.html'">
                                 <div class="quick-start-icon">📝</div>
                                 <div class="quick-start-title">Hands-On Exercise</div>
                                 <div class="quick-start-desc">Practice with real research data</div>
@@ -876,7 +876,7 @@
                 // Day 1 has the original structure
                 sidebarHTML += `
                     <li class="module-item">
-                        <div class="module-header" onclick="window.location.href='modules/welcome/index.html'" style="cursor: pointer;">
+                        <div class="module-header" onclick="window.location.href='modules/welcome/welcome-setup.html'" style="cursor: pointer;">
                             <span class="module-title">Welcome & Setup</span>
                         </div>
                     </li>
@@ -886,7 +886,7 @@
                         </div>
                     </li>
                     <li class="module-item">
-                        <div class="module-header" onclick="window.location.href='modules/openalex/index.html'" style="cursor: pointer;">
+                        <div class="module-header" onclick="window.location.href='modules/openalex/openalex-explorer.html'" style="cursor: pointer;">
                             <span class="module-title">🔍 OpenAlex Discovery</span>
                             <span style="background: linear-gradient(135deg, var(--bright-yellow), var(--bright-orange)); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; color: var(--dark-bg);">Interactive</span>
                         </div>
@@ -922,19 +922,19 @@
                         </div>
                     </li>
                     <li class="module-item">
-                        <div class="module-header" onclick="window.location.href='modules/cartography/index.html'" style="cursor: pointer;">
+                        <div class="module-header" onclick="window.location.href='modules/cartography/knowledge-cartography.html'" style="cursor: pointer;">
                             <span class="module-title">🗺️ Knowledge Cartography</span>
                             <span style="background: linear-gradient(135deg, var(--bright-purple), var(--bright-yellow)); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; color: var(--dark-bg);">Slides</span>
                         </div>
                     </li>
                     <li class="module-item">
-                        <div class="module-header" onclick="window.location.href='modules/frame/index.html'" style="cursor: pointer;">
+                        <div class="module-header" onclick="window.location.href='modules/frame/building-taxonomies.html'" style="cursor: pointer;">
                             <span class="module-title">🎯 Building Taxonomies</span>
                             <span style="background: linear-gradient(135deg, var(--bright-cyan), var(--bright-purple)); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; color: var(--dark-bg);">Interactive</span>
                         </div>
                     </li>
                     <li class="module-item">
-                        <div class="module-header" onclick="window.location.href='modules/exercise/index.html'" style="cursor: pointer;">
+                        <div class="module-header" onclick="window.location.href='modules/exercise/hands-on-exercise.html'" style="cursor: pointer;">
                             <span class="module-title">📝 Hands-On Exercise</span>
                             <span style="background: linear-gradient(135deg, var(--bright-yellow), var(--bright-orange)); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; color: var(--dark-bg);">Workshop</span>
                         </div>
