@@ -549,7 +549,7 @@ After completing the versioning system, we identified a critical strategic oppor
 | Date | Location | Institution | Brand | Status |
 |------|----------|------------|-------|--------|
 | March 2026 | Boston | Fletcher | **RuBase** | ✅ Completed |
-| April 2026 | Paris | IRSEM | **StratBase** | 📋 Planning |
+| March 27, 2026 | Paris | IRSEM | **StratBase** | 📋 Planning |
 | Sept 2026 | Astana | Kazakhstan | **RuBase** | 📋 Scheduled |
 | Sept 2026 | Baku | Azerbaijan | **RuBase** | 📋 Scheduled |
 | Oct 2026 | Helsinki | Finland | **RuBase** | 📋 Scheduled |
@@ -649,7 +649,7 @@ After completing the versioning system, we identified a critical strategic oppor
 - ✅ Clear workflows for future deployments
 
 ### Ready For
-- IRSEM Paris workshop (April 2026) as StratBase
+- IRSEM Paris workshop (March 27, 2026) as StratBase
 - Central Asian workshops (September 2026) as RuBase
 - Helsinki workshop (October 2026) as RuBase
 - Unlimited future workshops with either brand
@@ -658,7 +658,7 @@ After completing the versioning system, we identified a critical strategic oppor
 
 ## 🚀 Next Actions
 
-### Immediate (Before IRSEM - April 2026)
+### Immediate (Before IRSEM - March 27, 2026)
 1. Create StratBase-specific case studies
 2. Develop French translations for key materials
 3. Test brand switching workflow

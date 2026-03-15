@@ -22,7 +22,7 @@ Both workshops use identical technical infrastructure and methodologies, but wit
 | Date | Location | Institution | Brand | Status | Audience Focus |
 |------|----------|------------|-------|--------|----------------|
 | March 11-13 | Boston, USA | Fletcher School | RuBase | ✅ Completed | International relations, Russia/Eurasia |
-| April 2026 | Paris, France | IRSEM | StratBase | 🔄 Planning | Strategic studies, defense analysis |
+| March 27, 2026 | Paris, France | IRSEM | StratBase | 🔄 Planning | Strategic studies, defense analysis |
 | September 2026 | Astana, Kazakhstan | TBD | RuBase | 📋 Scheduled | Central Asian studies, regional analysis |
 | September 2026 | Baku, Azerbaijan | TBD | RuBase | 📋 Scheduled | Caspian region, energy studies |
 | October 2026 | Helsinki, Finland | TBD | RuBase | 📋 Scheduled | Nordic-Russian relations, Arctic studies |
@@ -372,4 +372,4 @@ Consider developing a configuration wizard that automatically:
 
 *Document Created: March 15, 2026*
 *Version: 1.0*
-*Next Review: April 2026 (Post-IRSEM)*
+*Next Review: March 2026 (Post-IRSEM)*
