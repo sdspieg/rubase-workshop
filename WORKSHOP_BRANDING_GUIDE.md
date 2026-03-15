@@ -30,7 +30,6 @@ Both workshops use identical technical infrastructure and methodologies, but wit
 
 ### Branding Rationale by Location
 - **Paris (IRSEM)**: StratBase - Broader strategic studies appeal for French defense institute
-- **Harvard**: StratBase - Wider policy audience at Kennedy School
 - **Central Asia/Caucasus**: RuBase - Regional focus, post-Soviet space expertise
 - **Helsinki**: RuBase - Strong Russia/Baltic regional studies tradition
 
