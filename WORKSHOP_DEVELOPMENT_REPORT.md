@@ -523,7 +523,7 @@ This foundation ensures the RuBase Methods Workshop can scale effectively while 
 ### Strategic Pivot Recognition
 After completing the versioning system, we identified a critical strategic opportunity:
 - **Fletcher workshop** was branded as "RuBase" (Russia/Eurasia focus)
-- **Future workshops** at IRSEM Paris, Harvard, etc. would benefit from broader branding
+- **Future workshops** at IRSEM Paris, etc. would benefit from broader branding
 - **Solution**: Create dual RuBase/StratBase branding system
 
 ### Dual Brand Strategy
@@ -550,7 +550,6 @@ After completing the versioning system, we identified a critical strategic oppor
 |------|----------|------------|-------|--------|
 | March 2026 | Boston | Fletcher | **RuBase** | ✅ Completed |
 | April 2026 | Paris | IRSEM | **StratBase** | 📋 Planning |
-| May 2026 | Cambridge | Harvard | **StratBase** | 🤔 Tentative |
 | Sept 2026 | Astana | Kazakhstan | **RuBase** | 📋 Scheduled |
 | Sept 2026 | Baku | Azerbaijan | **RuBase** | 📋 Scheduled |
 | Oct 2026 | Helsinki | Finland | **RuBase** | 📋 Scheduled |
@@ -651,7 +650,6 @@ After completing the versioning system, we identified a critical strategic oppor
 
 ### Ready For
 - IRSEM Paris workshop (April 2026) as StratBase
-- Harvard workshop (May 2026) as StratBase
 - Central Asian workshops (September 2026) as RuBase
 - Helsinki workshop (October 2026) as RuBase
 - Unlimited future workshops with either brand
@@ -670,7 +668,6 @@ After completing the versioning system, we identified a critical strategic oppor
 1. Deploy IRSEM as first StratBase workshop
 2. Evaluate success of brand differentiation
 3. Refine based on feedback
-4. Prepare Harvard materials if confirmed
 
 ### Medium Term (Q3-Q4 2026)
 1. Execute Central Asian RuBase workshops

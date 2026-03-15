@@ -23,7 +23,6 @@ Both workshops use identical technical infrastructure and methodologies, but wit
 |------|----------|------------|-------|--------|----------------|
 | March 11-13 | Boston, USA | Fletcher School | RuBase | ✅ Completed | International relations, Russia/Eurasia |
 | April 2026 | Paris, France | IRSEM | StratBase | 🔄 Planning | Strategic studies, defense analysis |
-| May 2026 | Cambridge, USA | Harvard Kennedy | StratBase | 🤔 Tentative | Policy analysis, governance |
 | September 2026 | Astana, Kazakhstan | TBD | RuBase | 📋 Scheduled | Central Asian studies, regional analysis |
 | September 2026 | Baku, Azerbaijan | TBD | RuBase | 📋 Scheduled | Caspian region, energy studies |
 | October 2026 | Helsinki, Finland | TBD | RuBase | 📋 Scheduled | Nordic-Russian relations, Arctic studies |
@@ -265,7 +264,6 @@ Both brands share core value propositions:
 
 ### Phase 2: Q2 2026 (April-June)
 - [ ] Launch IRSEM workshop (StratBase)
-- [ ] Evaluate Harvard opportunity
 - [ ] Develop brand-specific marketing materials
 - [ ] Create institutional partnership templates
 
