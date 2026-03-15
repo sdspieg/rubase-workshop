@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RuBase Methods Workshop - Fletcher</title>
+    <title>RuBase Methods Workshop</title>
     <style>
         :root {
             --primary-bg: #0a0e27;
@@ -512,9 +512,17 @@
 
     <!-- Header -->
     <header class="header" style="padding-left: 120px; padding-right: 120px;">
-        <div class="header-title">🎓 RuBase Methods Workshop - Fletcher</div>
+        <div class="header-title">🎓 RuBase Methods Workshop</div>
+        <div class="archive-indicator">
+            <select id="workshopSelector" onchange="navigateToWorkshop(this.value)" style="background: var(--secondary-bg); color: var(--accent-yellow); border: 1px solid var(--accent-yellow); padding: 5px 10px; border-radius: 5px; font-size: 0.9rem;">
+                <option value="current" selected>★ Latest Version</option>
+                <option value="fletcher-2603">Fletcher School - March 2026</option>
+                <option value="" disabled>More archives coming...</option>
+            </select>
+        </div>
         <nav class="header-nav">
             <button onclick="showHome()">🏠 Home</button>
+            <button onclick="window.location.href='workshop-archives.html'" style="background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan)); color: var(--primary-bg);">🏛️ Archives</button>
             <button onclick="window.location.href='modules/resources/index.html'">📚 Resources</button>
             <button onclick="window.location.href='download-materials.html'" style="background: linear-gradient(135deg, var(--accent-green), var(--accent-yellow)); color: var(--primary-bg);">⬇️ Download All</button>
             <button onclick="window.location.href='modules/techhelp/index.html'">❓ Help</button>
@@ -588,8 +596,8 @@
         <main class="content-area" id="contentArea">
             <!-- Welcome Screen (default) -->
             <div class="welcome-screen" id="welcomeScreen">
-                <h1 class="welcome-title">Welcome to RuBase Methods Workshop - Fletcher</h1>
-                <p class="welcome-subtitle">AI-Augmented Research at The Fletcher School</p>
+                <h1 class="welcome-title">Welcome to RuBase Methods Workshop</h1>
+                <p class="welcome-subtitle">AI-Augmented Research Methods & Advanced Analysis Tools</p>
 
                 <div class="quick-start-grid">
                     <div class="quick-start-card" onclick="window.location.href='modules/workshop-overview/index.html'">
@@ -639,6 +647,16 @@
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
     <script>
+        // Workshop navigation
+        function navigateToWorkshop(value) {
+            if (value === 'fletcher-2603') {
+                window.location.href = 'https://sdspieg.github.io/rubase-workshop-fletcher-2603/';
+            } else if (value === 'current') {
+                // Already on current
+                return;
+            }
+        }
+
         // Workshop data structure
         const WORKSHOP = {
             currentDay: 1,
