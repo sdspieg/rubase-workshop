@@ -359,36 +359,119 @@
             bottom: 20px;
             left: 20px;
             z-index: 1001;
-            background: var(--accent-cyan);
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
             color: var(--primary-bg);
             border: none;
             border-radius: 50%;
-            width: 50px;
+            width: 56px;
             height: 50px;
             font-size: 1.5rem;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
         }
 
+        /* Sidebar overlay for mobile */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 998;
+            backdrop-filter: blur(5px);
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
         @media (max-width: 768px) {
             .sidebar-toggle {
                 display: block;
+                animation: pulse 2s infinite;
+            }
+
+            @keyframes pulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.05); }
             }
 
             .sidebar {
                 position: fixed;
+                left: -100%;
+                top: 0;
                 z-index: 999;
                 height: 100vh;
+                width: 85%;
+                max-width: 320px;
                 box-shadow: 5px 0 20px rgba(0,0,0,0.5);
+                transition: left 0.3s ease;
+                background: rgba(21, 27, 61, 0.98);
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+
+            .main-container {
+                flex-direction: column;
+            }
+
+            .content-area {
+                margin-left: 0;
+                width: 100%;
+                padding: 15px;
+            }
+
+            .header {
+                padding: 15px;
+            }
+
+            .header-title {
+                font-size: 1.2rem;
+            }
+
+            .header-nav button {
+                padding: 6px 10px;
+                font-size: 0.8rem;
             }
 
             .day-progress {
                 flex-direction: column;
                 gap: 10px;
+                padding: 15px;
             }
 
-            .content-area {
-                padding: 15px;
+            .day-item {
+                padding: 10px;
+            }
+
+            .day-number {
+                font-size: 1.5rem;
+            }
+
+            .day-title {
+                font-size: 1rem;
+            }
+
+            .quick-start-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .welcome-title {
+                font-size: 2rem;
+            }
+
+            .welcome-subtitle {
+                font-size: 1rem;
+            }
+
+            /* Hide partner logos on mobile */
+            div[style*="position: fixed"] {
+                display: none !important;
             }
         }
 
@@ -433,6 +516,7 @@
         <nav class="header-nav">
             <button onclick="showHome()">🏠 Home</button>
             <button onclick="window.location.href='modules/resources/index.html'">📚 Resources</button>
+            <button onclick="window.location.href='download-materials.html'" style="background: linear-gradient(135deg, var(--accent-green), var(--accent-yellow)); color: var(--primary-bg);">⬇️ Download All</button>
             <button onclick="window.location.href='modules/techhelp/index.html'">❓ Help</button>
         </nav>
     </header>
@@ -550,6 +634,9 @@
 
     <!-- Sidebar Toggle (Mobile) -->
     <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">☰</button>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
     <script>
         // Workshop data structure
@@ -878,17 +965,20 @@
                     <li class="module-item">
                         <div class="module-header" onclick="window.location.href='modules/welcome/welcome-setup.html'" style="cursor: pointer;">
                             <span class="module-title">Welcome & Setup</span>
+                            <span style="color: #00ff7f; font-size: 0.8rem; margin-left: 10px;">30 min</span>
                         </div>
                     </li>
                     <li class="module-item">
                         <div class="module-header" onclick="window.location.href='modules/mdviewer/index.html?file=RuBase_Workshop_Fletcher_Program.md'" style="cursor: pointer;">
                             <span class="module-title">📅 Workshop Overview</span>
+                            <span style="color: #00ff7f; font-size: 0.8rem; margin-left: 10px;">15 min</span>
                         </div>
                     </li>
                     <li class="module-item">
                         <div class="module-header" onclick="window.location.href='modules/openalex/openalex-explorer.html'" style="cursor: pointer;">
                             <span class="module-title">🔍 OpenAlex Discovery</span>
                             <span style="background: linear-gradient(135deg, var(--bright-yellow), var(--bright-orange)); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; color: var(--dark-bg);">Interactive</span>
+                            <span style="color: #00ff7f; font-size: 0.8rem; margin-left: 10px;">45 min</span>
                         </div>
                     </li>
                     <li class="module-item">
@@ -903,17 +993,20 @@
                     <li class="module-item">
                         <div class="module-header" onclick="window.location.href='modules/mdviewer/index.html?file=Day2_Schedule.md'" style="cursor: pointer;">
                             <span class="module-title">💭 Reflections From Yesterday</span>
+                            <span style="color: #ffa500; font-size: 0.8rem; margin-left: 10px;">30 min</span>
                         </div>
                     </li>
                     <li class="module-item">
                         <div class="module-header" onclick="window.location.href='modules/mdviewer/index.html?file=Day2_Schedule.md'" style="cursor: pointer;">
                             <span class="module-title">🔬 Deep Research Methods</span>
+                            <span style="color: #ffa500; font-size: 0.8rem; margin-left: 10px;">45 min</span>
                         </div>
                     </li>
                     <li class="module-item">
                         <div class="module-header" onclick="window.open('https://rumilspace.app', '_blank')" style="cursor: pointer;">
                             <span class="module-title">🎖️ Demo: Russia-Ukraine Analysis</span>
                             <span style="font-size: 0.8rem;">↗</span>
+                            <span style="color: #ffa500; font-size: 0.8rem; margin-left: 10px;">20 min</span>
                         </div>
                     </li>
                     <li class="module-item">
@@ -925,18 +1018,21 @@
                         <div class="module-header" onclick="window.location.href='modules/cartography/knowledge-cartography.html'" style="cursor: pointer;">
                             <span class="module-title">🗺️ Knowledge Cartography</span>
                             <span style="background: linear-gradient(135deg, var(--bright-purple), var(--bright-yellow)); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; color: var(--dark-bg);">Slides</span>
+                            <span style="color: #ffa500; font-size: 0.8rem; margin-left: 10px;">30 min</span>
                         </div>
                     </li>
                     <li class="module-item">
                         <div class="module-header" onclick="window.location.href='modules/frame/building-taxonomies.html'" style="cursor: pointer;">
                             <span class="module-title">🎯 Building Taxonomies</span>
                             <span style="background: linear-gradient(135deg, var(--bright-cyan), var(--bright-purple)); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; color: var(--dark-bg);">Interactive</span>
+                            <span style="color: #ffa500; font-size: 0.8rem; margin-left: 10px;">45 min</span>
                         </div>
                     </li>
                     <li class="module-item">
                         <div class="module-header" onclick="window.location.href='modules/exercise/hands-on-exercise.html'" style="cursor: pointer;">
                             <span class="module-title">📝 Hands-On Exercise</span>
                             <span style="background: linear-gradient(135deg, var(--bright-yellow), var(--bright-orange)); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; color: var(--dark-bg);">Workshop</span>
+                            <span style="color: #ffa500; font-size: 0.8rem; margin-left: 10px;">60 min</span>
                         </div>
                     </li>
                     <li class="module-item">
@@ -971,30 +1067,35 @@
                         <div class="module-header" onclick="window.location.href='modules/analyze/ottoman-bank-case-study.html'" style="cursor: pointer;">
                             <span class="module-title">🏛️ Ottoman Bank Case Study</span>
                             <span style="background: linear-gradient(135deg, var(--bright-green), var(--bright-cyan)); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; color: var(--dark-bg);">Slides</span>
+                            <span style="color: #00ffff; font-size: 0.8rem; margin-left: 10px;">40 min</span>
                         </div>
                     </li>
                     <li class="module-item">
                         <div class="module-header" onclick="window.location.href='modules/analyze/cli-llms-guide.html'" style="cursor: pointer;">
                             <span class="module-title">💻 CLI LLMs Guide</span>
                             <span style="background: linear-gradient(135deg, var(--bright-purple), var(--bright-cyan)); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; color: var(--dark-bg);">Slides</span>
+                            <span style="color: #00ffff; font-size: 0.8rem; margin-left: 10px;">50 min</span>
                         </div>
                     </li>
                     <li class="module-item">
                         <div class="module-header" onclick="window.location.href='modules/analyze/deep-research-guide.html'" style="cursor: pointer;">
                             <span class="module-title">🔍 Deep Research Guide</span>
                             <span style="background: linear-gradient(135deg, var(--bright-yellow), var(--bright-green)); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; color: var(--dark-bg);">Slides</span>
+                            <span style="color: #00ffff; font-size: 0.8rem; margin-left: 10px;">35 min</span>
                         </div>
                     </li>
                     <li class="module-item">
                         <div class="module-header" onclick="window.location.href='modules/analyze/wacko-presentation.html'" style="cursor: pointer;">
                             <span class="module-title">🎯 WACKO Presentation</span>
                             <span style="background: linear-gradient(135deg, var(--bright-orange), var(--bright-red)); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; color: var(--dark-bg);">Slides</span>
+                            <span style="color: #00ffff; font-size: 0.8rem; margin-left: 10px;">25 min</span>
                         </div>
                     </li>
                     <li class="module-item">
                         <div class="module-header" onclick="window.location.href='modules/analyze/llm-selection-guide.html'" style="cursor: pointer;">
                             <span class="module-title">🤖 LLM Selection Guide</span>
                             <span style="background: linear-gradient(135deg, var(--bright-cyan), var(--bright-yellow)); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; color: var(--dark-bg);">Slides</span>
+                            <span style="color: #00ffff; font-size: 0.8rem; margin-left: 10px;">30 min</span>
                         </div>
                     </li>
                     <li class="module-item">
@@ -1035,7 +1136,37 @@
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('collapsed');
+            const overlay = document.getElementById('sidebarOverlay');
+            const toggle = document.getElementById('sidebarToggle');
+
+            // For mobile, use open class instead of collapsed
+            if (window.innerWidth <= 768) {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+
+                // Update toggle button
+                if (sidebar.classList.contains('open')) {
+                    toggle.innerHTML = '✕';
+                    toggle.style.background = 'linear-gradient(135deg, var(--accent-red), var(--accent-orange))';
+                } else {
+                    toggle.innerHTML = '☰';
+                    toggle.style.background = 'linear-gradient(135deg, var(--accent-cyan), var(--accent-green))';
+                }
+            } else {
+                // Desktop behavior
+                sidebar.classList.toggle('collapsed');
+            }
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const toggle = document.getElementById('sidebarToggle');
+
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            toggle.innerHTML = '☰';
+            toggle.style.background = 'linear-gradient(135deg, var(--accent-cyan), var(--accent-green))';
         }
 
         function saveProgress() {
@@ -1085,6 +1216,110 @@
 
         // Load saved progress on startup
         window.addEventListener('load', loadProgress);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            // Skip if user is typing in an input field
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                return;
+            }
+
+            switch(e.key) {
+                case '1':
+                    // Press 1 to go to Day 1
+                    if (!e.ctrlKey && !e.altKey && !e.metaKey) {
+                        loadDay(1);
+                    }
+                    break;
+                case '2':
+                    // Press 2 to go to Day 2
+                    if (!e.ctrlKey && !e.altKey && !e.metaKey) {
+                        loadDay(2);
+                    }
+                    break;
+                case '3':
+                    // Press 3 to go to Day 3
+                    if (!e.ctrlKey && !e.altKey && !e.metaKey) {
+                        loadDay(3);
+                    }
+                    break;
+                case 'Escape':
+                    // ESC to return to home
+                    showHome();
+                    break;
+                case 'ArrowLeft':
+                    // Left arrow to go to previous day
+                    if (WORKSHOP.currentDay > 1) {
+                        loadDay(WORKSHOP.currentDay - 1);
+                    }
+                    break;
+                case 'ArrowRight':
+                    // Right arrow to go to next day
+                    if (WORKSHOP.currentDay < 3) {
+                        loadDay(WORKSHOP.currentDay + 1);
+                    }
+                    break;
+                case 'h':
+                case 'H':
+                    // Press H for home
+                    if (!e.ctrlKey && !e.altKey && !e.metaKey) {
+                        showHome();
+                    }
+                    break;
+                case '?':
+                    // Press ? to show keyboard shortcuts
+                    if (!e.ctrlKey && !e.altKey && !e.metaKey) {
+                        showKeyboardShortcuts();
+                    }
+                    break;
+            }
+        });
+
+        // Show keyboard shortcuts help
+        function showKeyboardShortcuts() {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: var(--secondary-bg);
+                border: 2px solid var(--accent-cyan);
+                border-radius: 15px;
+                padding: 30px;
+                z-index: 10000;
+                max-width: 500px;
+                box-shadow: 0 20px 60px rgba(0,255,255,0.3);
+            `;
+
+            modal.innerHTML = `
+                <h3 style="color: var(--accent-cyan); margin-bottom: 20px;">⌨️ Keyboard Shortcuts</h3>
+                <div style="color: var(--text-primary); line-height: 2;">
+                    <div><kbd style="background: var(--primary-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">1</kbd> - Go to Day 1</div>
+                    <div><kbd style="background: var(--primary-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">2</kbd> - Go to Day 2</div>
+                    <div><kbd style="background: var(--primary-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">3</kbd> - Go to Day 3</div>
+                    <div><kbd style="background: var(--primary-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">←</kbd> - Previous day</div>
+                    <div><kbd style="background: var(--primary-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">→</kbd> - Next day</div>
+                    <div><kbd style="background: var(--primary-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">H</kbd> - Go home</div>
+                    <div><kbd style="background: var(--primary-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">ESC</kbd> - Return to home</div>
+                    <div><kbd style="background: var(--primary-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">?</kbd> - Show this help</div>
+                </div>
+                <button onclick="this.parentElement.remove()" style="margin-top: 20px; background: var(--accent-cyan); color: var(--primary-bg); border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: 600;">Close</button>
+            `;
+
+            document.body.appendChild(modal);
+
+            // Close on ESC or click outside
+            const closeModal = (e) => {
+                if (e.key === 'Escape' || (e.type === 'click' && !modal.contains(e.target))) {
+                    modal.remove();
+                    document.removeEventListener('keydown', closeModal);
+                    document.removeEventListener('click', closeModal);
+                }
+            };
+            document.addEventListener('keydown', closeModal);
+            setTimeout(() => document.addEventListener('click', closeModal), 100);
+        }
     </script>
 </body>
 </html><!-- Force rebuild Wed Mar 11 12:19:18 EDT 2026 -->
