@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<!-- RuBase/StratBase Methods Workshop - Latest Version -->
+<html lang="en">
+<!-- HCSS_DASHBOARD_RESTYLE_2026_05_05 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RuBase/StratBase Methods Workshop | Generic 3-Day Version</title>
+    <style>
+        /* ── HCSS dashboard palette (mirrors rubase-sunburst-template/src/App.css) ── */
+        :root {
+            --bg: #0d1f3c;
+            --db: #1a3761;
+            --gold: #dbad50;
+            --lb: #82a0bc;
+            --wh: #e8edf3;
+            --r: 8px;
+            /* Aliases so legacy class names keep mapping */
+            --primary-bg: var(--bg);
+            --secondary-bg: var(--db);
+            --accent-cyan: var(--gold);
+            --accent-purple: var(--gold);
+            --accent-green: var(--gold);
+            --accent-yellow: var(--gold);
+            --accent-red: var(--gold);
+            --accent-orange: var(--gold);
+            --text-primary: var(--wh);
+            --text-secondary: var(--lb);
+            --border-color: rgba(255,255,255,.10);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--wh);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header — 2-row banner. Row 1: HCSS+GT logos (left), title (center),
+           CCNY+RuBase logos (right). Row 2: nav buttons (Home, Resources,
+           Deliverables Overview, version selector). */
+        .header {
+            background: var(--db);
+            border-bottom: 1px solid rgba(255,255,255,.10);
+            padding: 8px 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: grid;
+            grid-template-rows: auto auto;
+            row-gap: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.25);
+        }
+        .header-row1 {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 1rem;
+        }
+        .header-row2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .5rem;
+            padding-top: 6px;
+            border-top: 1px solid rgba(255,255,255,.06);
+            flex-wrap: wrap;
+        }
+        .h-left, .h-right { display: flex; align-items: center; gap: 1rem; }
+        .h-right { justify-content: flex-end; }
+        .h-logo { height: 40px; width: auto; flex-shrink: 0; display: inline-flex; align-items: center; }
+        .h-logo img { height: 40px; width: auto; }
+        .h-logo.invert img { filter: brightness(0) invert(1); }   /* HCSS+CCNY are black-on-white SVGs; invert for dark header */
+        @media (max-width: 760px) { .h-logo, .h-logo img { height: 32px; } }
+
+        .header-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--wh);
+            letter-spacing: .4px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        @media (max-width: 760px) { .header-title { font-size: .95rem; } }
+
+        .header-nav { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; justify-content: center; }
+
+        .header-nav a, .header-nav button {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: .4rem .85rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: .85rem;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background .15s, color .15s;
+        }
+        .header-nav a:hover, .header-nav button:hover {
+            background: var(--gold);
+            color: var(--db);
+            transform: none;
+        }
+
+        /* Highlighted "Deliverables Overview" CTA */
+        .header-nav .deliverables-btn {
+            background: var(--gold);
+            color: var(--db);
+        }
+        .header-nav .deliverables-btn:hover { background: #e8be64; box-shadow: none; }
+
+        /* Timeline Progress */
+        .timeline-bar {
+            background: var(--db);
+            padding: 15px 30px;
+            border-bottom: 1px solid rgba(255,255,255,.10);
+            display: flex;
+            align-items: center;
+            gap: 0;
+            overflow-x: auto;
+        }
+        .timeline-block {
+            flex: 1;
+            text-align: center;
+            padding: 12px 8px;
+            cursor: pointer;
+            transition: background .14s;
+            position: relative;
+            min-width: 120px;
+            border-radius: 6px;
+        }
+        .timeline-block:hover { background: rgba(219,173,80,.08); }
+        .timeline-block.active {
+            background: rgba(219,173,80,.14);
+            box-shadow: inset 0 -2px 0 var(--gold);
+        }
+        .timeline-block.break-block { flex: .4; min-width: 80px; opacity: .6; }
+        .timeline-time { font-size: .75rem; color: var(--gold); font-weight: 600; margin-bottom: 4px; }
+        .timeline-label { font-size: .85rem; font-weight: 600; color: var(--wh); }
+        .timeline-duration { font-size: .7rem; color: var(--lb); margin-top: 2px; }
+        .timeline-connector { width: 20px; height: 2px; background: rgba(255,255,255,.10); flex-shrink: 0; }
+
+        /* Main container + sidebar */
+        .main-container { display: flex; min-height: calc(100vh - 140px); }
+        .sidebar {
+            width: 300px;
+            background: var(--db);
+            border-right: 1px solid rgba(255,255,255,.10);
+            padding: 20px;
+            overflow-y: auto;
+            transition: transform .3s;
+        }
+        .sidebar h3 {
+            color: var(--gold);
+            margin-bottom: 15px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .sidebar-section { margin-bottom: 25px; }
+        .sidebar-section-title {
+            color: var(--gold);
+            font-size: .8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid rgba(219,173,80,.25);
+        }
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            margin: 4px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all .14s;
+            border: 1px solid transparent;
+        }
+        .sidebar-item:hover {
+            border-color: var(--gold);
+            background: rgba(219,173,80,.06);
+            transform: translateX(3px);
+        }
+        .sidebar-item.active {
+            background: rgba(219,173,80,.12);
+            border-color: var(--gold);
+        }
+        .sidebar-item-title { font-size: .9rem; font-weight: 600; }
+        .sidebar-item-meta { display: flex; gap: 6px; align-items: center; }
+        .sidebar-badge {
+            font-size: .65rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            background: rgba(219,173,80,.18);
+            color: var(--gold);
+        }
+        .badge-time { color: var(--lb); font-size: .75rem; background: transparent; }
+        .badge-interactive,
+        .badge-slides,
+        .badge-demo {
+            background: var(--gold);
+            color: var(--db);
+        }
+        .badge-external { font-size: .8rem; background: transparent; color: var(--gold); padding: 0; }
+
+        /* Content area */
+        .content-area { flex: 1; padding: 30px; overflow-y: auto; }
+
+        /* Welcome screen */
+        .welcome-screen { text-align: center; padding: 40px 20px; }
+        .welcome-title {
+            font-size: 2.4rem;
+            margin-bottom: 15px;
+            color: var(--gold);
+            font-weight: 800;
+            letter-spacing: .5px;
+        }
+        .welcome-subtitle { font-size: 1.15rem; color: var(--lb); margin-bottom: 10px; line-height: 1.5; }
+        .welcome-meta { font-size: 1rem; color: var(--gold); margin-bottom: 40px; }
+
+        /* Session cards grid */
+        .session-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .session-card {
+            background: var(--db);
+            border: 1px solid rgba(255,255,255,.08);
+            border-left: 4px solid var(--gold);
+            border-radius: var(--r);
+            padding: 25px;
+            cursor: pointer;
+            transition: transform .14s, border-color .14s, box-shadow .14s;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+        }
+        .session-card::before { content: none; }
+        .session-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--gold);
+            box-shadow: 0 8px 24px rgba(0,0,0,.35);
+        }
+        .card-icon { font-size: 2.4rem; margin-bottom: 12px; color: var(--gold); }
+        .card-time { font-size: .8rem; color: var(--gold); font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: .5px; }
+        .card-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; color: var(--wh); }
+        .card-desc { color: var(--lb); font-size: .9rem; line-height: 1.55; }
+
+        /* Sub-items inside cards */
+        .card-items { margin-top: 12px; border-top: 1px solid rgba(255,255,255,.10); padding-top: 10px; }
+        .card-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: .85rem; color: var(--lb); }
+        .card-item-bullet { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: var(--gold); }
+        .bullet-red, .bullet-purple, .bullet-green { background: var(--gold); }
+
+        /* Block content sections */
+        .block-content { display: none; max-width: 1000px; margin: 0 auto; }
+        .block-content.active { display: block; }
+        .block-header { margin-bottom: 30px; }
+        .block-header h2 { font-size: 1.9rem; color: var(--gold); margin-bottom: 8px; font-weight: 700; }
+        .block-header .block-time-range { color: var(--lb); font-size: 1rem; font-weight: 600; }
+        .block-header p { color: var(--lb); margin-top: 10px; font-size: 1.02rem; line-height: 1.6; }
+
+        .content-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .content-card {
+            background: var(--db);
+            border: 1px solid rgba(255,255,255,.10);
+            border-left: 3px solid var(--gold);
+            border-radius: var(--r);
+            padding: 25px;
+            transition: transform .14s, border-color .14s, box-shadow .14s;
+            cursor: pointer;
+        }
+        .content-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,.3);
+        }
+        .content-card h3 { color: var(--gold); margin-bottom: 8px; font-size: 1.08rem; }
+        .content-card .card-duration { color: var(--lb); font-size: .85rem; margin-bottom: 10px; font-weight: 600; }
+        .content-card p { color: var(--lb); font-size: .9rem; line-height: 1.55; }
+        .content-card ul { color: var(--lb); font-size: .9rem; margin-top: 8px; padding-left: 20px; line-height: 1.7; }
+
+        /* Narrative flow indicator */
+        .narrative-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(219,173,80,.06);
+            border: 1px dashed rgba(255,255,255,.18);
+            border-radius: var(--r);
+        }
+        .narrative-step { text-align: center; padding: 10px 20px; }
+        .narrative-step .step-label { font-size: .75rem; color: var(--lb); text-transform: uppercase; letter-spacing: 1px; }
+        .narrative-step .step-name { font-size: 1rem; font-weight: 700; margin-top: 4px; color: var(--wh); }
+        .narrative-arrow { color: var(--gold); font-size: 1.4rem; }
+        .step-hook .step-name,
+        .step-depth .step-name,
+        .step-scale .step-name { color: var(--gold); }
+
+        /* Hands-on task list */
+        .task-list { list-style: none; margin-top: 15px; }
+        .task-list li {
+            padding: 10px 15px;
+            margin: 6px 0;
+            background: rgba(219,173,80,.06);
+            border-left: 3px solid var(--gold);
+            border-radius: 0 6px 6px 0;
+            color: var(--lb);
+            font-size: .95rem;
+        }
+
+        /* Sunburst app grid */
+        .sunburst-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .sunburst-card {
+            background: var(--db);
+            border: 1px solid rgba(255,255,255,.10);
+            border-left: 4px solid var(--gold);
+            border-radius: var(--r);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform .14s, border-color .14s, box-shadow .14s;
+        }
+        .sunburst-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--gold);
+            box-shadow: 0 8px 24px rgba(0,0,0,.3);
+        }
+        .sunburst-card h4 { color: var(--gold); margin-bottom: 6px; }
+        .sunburst-card p { color: var(--lb); font-size: .85rem; }
+
+        /* Partner logos (fixed, off-corner) */
+        .partner-logo { position: fixed; top: 15px; z-index: 1001; }
+        .partner-logo.left { left: 20px; }
+        .partner-logo.right { right: 20px; }
+        .partner-logo img { height: 40px; opacity: .85; transition: opacity .2s; }
+        .partner-logo img:hover { opacity: 1; }
+
+        /* Back-to-home button */
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gold);
+            cursor: pointer;
+            font-size: .9rem;
+            margin-bottom: 20px;
+            padding: .4rem .85rem;
+            border: 1px solid var(--gold);
+            border-radius: 6px;
+            background: transparent;
+            transition: background .14s, color .14s;
+            font-family: inherit;
+            font-weight: 700;
+        }
+        .back-home:hover { background: var(--gold); color: var(--db); }
+
+        /* Mobile */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: var(--gold);
+            color: var(--db);
+            border: none;
+            border-radius: 50%;
+            width: 56px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,.5);
+        }
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,.7);
+            z-index: 998;
+            backdrop-filter: blur(5px);
+        }
+        .sidebar-overlay.active { display: block; }
+
+        @media (max-width: 768px) {
+            .sidebar-toggle { display: block; }
+
+            .sidebar {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                z-index: 999;
+                height: 100vh;
+                width: 85%;
+                max-width: 320px;
+                box-shadow: 5px 0 20px rgba(0,0,0,.5);
+                transition: left .3s ease;
+                background: var(--db);
+            }
+            .sidebar.open { left: 0; }
+            .main-container { flex-direction: column; }
+            .content-area { margin-left: 0; width: 100%; padding: 15px; }
+            .header { padding: 10px 15px; }
+            .header-title { font-size: 1rem; }
+            .header-nav a, .header-nav button { padding: .3rem .55rem; font-size: .75rem; }
+            .timeline-bar { padding: 10px; gap: 0; }
+            .timeline-block { min-width: 80px; padding: 8px 4px; }
+            .timeline-label { font-size: .7rem; }
+            .welcome-title { font-size: 1.8rem; }
+            .welcome-subtitle { font-size: 1rem; }
+            .session-grid { grid-template-columns: 1fr; }
+            .partner-logo { display: none; }
+            .narrative-flow { flex-direction: column; gap: 8px; }
+            .narrative-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header — 2-row banner.
+         Row 1: HCSS + GT (left) · Title (center) · Carnegie + RuBase (right)
+         Row 2: Home · Resources · RuBase Deliverables Overview · version selector -->
+    <header class="header">
+        <div class="header-row1">
+            <div class="h-left">
+                <a href="https://hcss.nl" target="_blank" rel="noreferrer" class="h-logo invert" title="HCSS"><img src="assets/logos/hcss_logo.svg" alt="HCSS"></a>
+                <a href="https://gatech.edu" target="_blank" rel="noreferrer" class="h-logo" title="Georgia Tech"><img src="assets/logos/gt.svg" alt="Georgia Tech"></a>
+            </div>
+            <div class="header-title">RuBase/StratBase Methods Workshop &mdash; Generic 3-Day Version</div>
+            <div class="h-right">
+                <a href="https://www.carnegie.org" target="_blank" rel="noreferrer" class="h-logo invert" title="Carnegie Corporation of New York"><img src="assets/logos/ccny_logo.svg" alt="Carnegie Corporation"></a>
+                <a href="https://hcss.nl/rubase/" target="_blank" rel="noreferrer" class="h-logo" title="RuBase"><img src="assets/logos/rubase_logo.svg" alt="RuBase"></a>
+            </div>
+        </div>
+        <nav class="header-row2 header-nav">
+            <button onclick="showHome()">Home</button>
+            <a href="modules/resources/index.html">Resources</a>
+            <a href="https://rubase.org/" target="_blank" rel="noreferrer" class="deliverables-btn">RuBase Deliverables Overview</a>
+            <select id="workshopSelector" onchange="navigateToWorkshop(this.value)" style="background: transparent; color: var(--gold); border: 1px solid var(--gold); padding: .35rem .55rem; border-radius: 6px; font-size: .8rem; font-family: inherit;">
+                <option value="current" selected>Generic 3-Day Version</option>
+                <option value="5day">Generic 5-Day Programme (latest)</option>
+                <option value="irsem-2703">IRSEM Paris - March 2026</option>
+                <option value="fletcher-2603">Fletcher School - March 2026</option>
+            </select>
+        </nav>
+    </header>
+
+    <!-- Timeline Progress Bar -->
+    <div class="timeline-bar">
+        <div class="timeline-block active" onclick="scrollToBlock('opening')">
+            <div class="timeline-time">09:00-09:30</div>
+            <div class="timeline-label">Opening</div>
+            <div class="timeline-duration">30 min</div>
+        </div>
+        <div class="timeline-connector"></div>
+        <div class="timeline-block" onclick="scrollToBlock('examples')">
+            <div class="timeline-time">09:30-10:45</div>
+            <div class="timeline-label">Guided Examples</div>
+            <div class="timeline-duration">75 min</div>
+        </div>
+        <div class="timeline-connector"></div>
+        <div class="timeline-block break-block">
+            <div class="timeline-time">10:45</div>
+            <div class="timeline-label">Break</div>
+            <div class="timeline-duration">15 min</div>
+        </div>
+        <div class="timeline-connector"></div>
+        <div class="timeline-block" onclick="scrollToBlock('handson')">
+            <div class="timeline-time">11:00-11:45</div>
+            <div class="timeline-label">Hands-On</div>
+            <div class="timeline-duration">45 min</div>
+        </div>
+        <div class="timeline-connector"></div>
+        <div class="timeline-block" onclick="scrollToBlock('debrief')">
+            <div class="timeline-time">11:45-12:00</div>
+            <div class="timeline-label">Debrief</div>
+            <div class="timeline-duration">15 min</div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <h3>Session Guide</h3>
+
+            <!-- Block 1: Opening -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">09:00-09:30 | Opening</div>
+                <div class="sidebar-item" onclick="showBlock('opening')">
+                    <span class="sidebar-item-title">Overview</span>
+                    <span class="badge-time">15 min</span>
+                </div>
+                <div class="sidebar-item" onclick="showBlock('opening')">
+                    <span class="sidebar-item-title">Participant Intros</span>
+                    <span class="badge-time">15 min</span>
+                </div>
+            </div>
+
+            <!-- Block 2: Guided Examples -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">09:30-10:45 | Guided Examples</div>
+                <div class="sidebar-item" onclick="showBlock('redlines')">
+                    <span class="sidebar-item-title">Red Lines Analysis</span>
+                    <div class="sidebar-item-meta">
+                        <span class="sidebar-badge badge-demo">Demo</span>
+                        <span class="badge-time">25 min</span>
+                    </div>
+                </div>
+                <div class="sidebar-item" onclick="showBlock('wacko')">
+                    <span class="sidebar-item-title">WACKO Framework</span>
+                    <div class="sidebar-item-meta">
+                        <span class="sidebar-badge badge-slides">Slides</span>
+                        <span class="badge-time">25 min</span>
+                    </div>
+                </div>
+                <div class="sidebar-item" onclick="showBlock('battlefield')">
+                    <span class="sidebar-item-title">Transparent Battlefield</span>
+                    <div class="sidebar-item-meta">
+                        <span class="sidebar-badge badge-demo">Demo</span>
+                        <span class="badge-time">25 min</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Break -->
+            <div class="sidebar-section" style="opacity: 0.5;">
+                <div class="sidebar-section-title">10:45-11:00 | Break</div>
+            </div>
+
+            <!-- Block 3: Hands-On -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">11:00-11:45 | Hands-On</div>
+                <div class="sidebar-item" onclick="showBlock('handson')">
+                    <span class="sidebar-item-title">Sunburst Exploration</span>
+                    <div class="sidebar-item-meta">
+                        <span class="sidebar-badge badge-interactive">Interactive</span>
+                        <span class="badge-time">45 min</span>
+                    </div>
+                </div>
+                <div class="sidebar-item" onclick="window.open('https://rubase.org/', '_blank')">
+                    <span class="sidebar-item-title">RuBase Deliverables</span>
+                    <span class="badge-external">&#8599;</span>
+                </div>
+            </div>
+
+            <!-- Block 4: Debrief -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">11:45-12:00 | Wrap-Up</div>
+                <div class="sidebar-item" onclick="showBlock('debrief')">
+                    <span class="sidebar-item-title">Debrief & Next Steps</span>
+                    <span class="badge-time">15 min</span>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="sidebar-section" style="margin-top: 20px; border-top: 1px solid rgba(219,173,80,0.2); padding-top: 15px;">
+                <div class="sidebar-section-title">Quick Links</div>
+                <div class="sidebar-item" onclick="window.open('https://rubase.org/', '_blank')">
+                    <span class="sidebar-item-title">RuBase Deliverables</span>
+                    <span class="badge-external">&#8599;</span>
+                </div>
+                <div class="sidebar-item" onclick="window.location.href='modules/resources/index.html'">
+                    <span class="sidebar-item-title">All Resources</span>
+                </div>
+                <div class="sidebar-item" onclick="window.location.href='modules/techhelp/index.html'">
+                    <span class="sidebar-item-title">Technical Help</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="content-area" id="contentArea">
+
+            <!-- HOME / Welcome Screen -->
+            <div class="block-content active" id="homeScreen">
+                <div class="welcome-screen">
+                    <h1 class="welcome-title">RuBase Session</h1>
+                    <p class="welcome-subtitle">AI-Augmented Defense Research: Decoding Russian Military Power</p>
+                    <p class="welcome-meta">March 28, 2026 | 09:00-12:00 | IRSEM, Paris</p>
+
+                    <div class="session-grid">
+                        <div class="session-card card-opening" onclick="showBlock('opening')">
+                            <div class="card-icon">&#9889;</div>
+                            <div class="card-time">09:00 - 09:30</div>
+                            <div class="card-title">Opening</div>
+                            <div class="card-desc">Why RuBase matters: corpora + taxonomy + AI + data fusion. Participant introductions.</div>
+                        </div>
+
+                        <div class="session-card card-examples" onclick="showBlock('examples')">
+                            <div class="card-icon">&#128293;</div>
+                            <div class="card-time">09:30 - 10:45</div>
+                            <div class="card-title">Guided Examples</div>
+                            <div class="card-desc">Progressive narrative through three RuBase deliverables.</div>
+                            <div class="card-items">
+                                <div class="card-item"><span class="card-item-bullet bullet-red"></span> Red Lines - the hook</div>
+                                <div class="card-item"><span class="card-item-bullet bullet-purple"></span> WACKO - the depth</div>
+                                <div class="card-item"><span class="card-item-bullet bullet-green"></span> Transparent Battlefield - the scale</div>
+                            </div>
+                        </div>
+
+                        <div class="session-card card-handson" onclick="showBlock('handson')">
+                            <div class="card-icon">&#129514;</div>
+                            <div class="card-time">11:00 - 11:45</div>
+                            <div class="card-title">Hands-On Exploration</div>
+                            <div class="card-desc">Explore the sunburst apps yourself. Find patterns, trace concepts, compare categories.</div>
+                        </div>
+
+                        <div class="session-card card-debrief" onclick="showBlock('debrief')">
+                            <div class="card-icon">&#127919;</div>
+                            <div class="card-time">11:45 - 12:00</div>
+                            <div class="card-title">Debrief & Wrap-Up</div>
+                            <div class="card-desc">What surprised you? How does this address your research bottlenecks?</div>
+                        </div>
+
+                        <div class="session-card card-deliverables" onclick="window.open('https://rubase.org/', '_blank')">
+                            <div class="card-icon">&#128230;</div>
+                            <div class="card-time">Reference</div>
+                            <div class="card-title">RuBase Deliverables Overview</div>
+                            <div class="card-desc">Complete overview of all RuBase project outputs, reports, and tools.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOCK: Opening -->
+            <div class="block-content" id="block-opening">
+                <button class="back-home" onclick="showHome()">&larr; Back to overview</button>
+                <div class="block-header">
+                    <h2>Opening</h2>
+                    <div class="block-time-range">09:00 - 09:30 (30 min)</div>
+                </div>
+
+                <div class="content-cards">
+                    <div class="content-card">
+                        <h3>09:00-09:15 | Overview</h3>
+                        <div class="card-duration">15 minutes</div>
+                        <p><strong>Why this matters</strong>, not how everything works.</p>
+                        <ul>
+                            <li><strong>The problem:</strong> fragmentation, scale, blind spots in Russian military analysis</li>
+                            <li><strong>RuBase:</strong> corpora + taxonomy + AI + data fusion</li>
+                            <li>One compelling output to set the stage</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>09:15-09:30 | Participant Introductions</h3>
+                        <div class="card-duration">15 minutes</div>
+                        <p>Structured introductions - we'll reference your answers during the demos.</p>
+                        <ul>
+                            <li>Name + affiliation</li>
+                            <li>"What do you struggle with most in your research/work?"</li>
+                        </ul>
+                        <p style="margin-top: 12px; color: var(--accent-yellow); font-size: 0.85rem;">
+                            Your answers will be used during the demos to show instant relevance.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOCK: Guided Examples Overview -->
+            <div class="block-content" id="block-examples">
+                <button class="back-home" onclick="showHome()">&larr; Back to overview</button>
+                <div class="block-header">
+                    <h2>Guided Examples</h2>
+                    <div class="block-time-range">09:30 - 10:45 (75 min)</div>
+                    <p>This is a <strong>progressive narrative</strong>, not three separate talks. Each example builds on the previous one.</p>
+                </div>
+
+                <!-- Narrative Flow Visualization -->
+                <div class="narrative-flow">
+                    <div class="narrative-step step-hook">
+                        <div class="step-label">Entry Point</div>
+                        <div class="step-name">Red Lines</div>
+                    </div>
+                    <div class="narrative-arrow">&rarr;</div>
+                    <div class="narrative-step step-depth">
+                        <div class="step-label">Deeper Layer</div>
+                        <div class="step-name">WACKO</div>
+                    </div>
+                    <div class="narrative-arrow">&rarr;</div>
+                    <div class="narrative-step step-scale">
+                        <div class="step-label">Full Scale</div>
+                        <div class="step-name">Transparent Battlefield</div>
+                    </div>
+                </div>
+
+                <div class="content-cards">
+                    <div class="content-card" onclick="showBlock('redlines')">
+                        <h3>1. Red Lines Analysis</h3>
+                        <div class="card-duration">09:30 - 09:55 | 25 minutes</div>
+                        <p>Concrete, intuitive entry point. <strong>Your "hook".</strong></p>
+                        <ul>
+                            <li>Statements &rarr; classification &rarr; behavioral linkage</li>
+                            <li>50,000+ Russian official statements processed</li>
+                            <li>Escalation threshold detection</li>
+                            <li>Tie to policy relevance</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card" onclick="showBlock('wacko')">
+                        <h3>2. WACKO Framework</h3>
+                        <div class="card-duration">09:55 - 10:20 | 25 minutes</div>
+                        <p>From observable signals to deeper ontology. <strong>Intellectual credibility.</strong></p>
+                        <ul>
+                            <li>Philosophical roots &rarr; modern discourse</li>
+                            <li>Cognitive mapping of adversarial thinking</li>
+                            <li>"This is what you miss without structured analysis"</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card" onclick="showBlock('battlefield')">
+                        <h3>3. Transparent Battlefield</h3>
+                        <div class="card-duration">10:20 - 10:45 | 25 minutes</div>
+                        <p>Data fusion at scale. <strong>Your "wow, this scales" moment.</strong></p>
+                        <ul>
+                            <li>Text + events + temporal patterns</li>
+                            <li>Where analysis becomes predictive / operational</li>
+                            <li>Multi-source data integration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOCK: Red Lines -->
+            <div class="block-content" id="block-redlines">
+                <button class="back-home" onclick="showBlock('examples')">&larr; Back to Guided Examples</button>
+                <div class="block-header">
+                    <h2>Red Lines Analysis</h2>
+                    <div class="block-time-range">09:30 - 09:55 | 25 min | The Hook</div>
+                    <p>Concrete, intuitive entry point. Start with observable data and show how structured analysis reveals patterns invisible to traditional approaches.</p>
+                </div>
+
+                <div class="content-cards">
+                    <div class="content-card">
+                        <h3>The Pipeline</h3>
+                        <p>From raw statements to actionable intelligence:</p>
+                        <ul>
+                            <li><strong>Collect:</strong> 50,000+ Russian official statements</li>
+                            <li><strong>Classify:</strong> NLP-driven categorization of escalation signals</li>
+                            <li><strong>Link:</strong> Connect rhetoric to actual behavioral outcomes</li>
+                            <li><strong>Predict:</strong> Pattern recognition in crisis signaling</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Key Demonstrations</h3>
+                        <ul>
+                            <li>Live walkthrough of statement classification</li>
+                            <li>Escalation threshold detection methodology</li>
+                            <li>How this connects to policy decisions</li>
+                            <li>What traditional analysis misses</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOCK: WACKO -->
+            <div class="block-content" id="block-wacko">
+                <button class="back-home" onclick="showBlock('examples')">&larr; Back to Guided Examples</button>
+                <div class="block-header">
+                    <h2>WACKO Framework</h2>
+                    <div class="block-time-range">09:55 - 10:20 | 25 min | The Depth</div>
+                    <p>Moving from observable signals to deeper ontology. This deepens the intellectual credibility of the approach.</p>
+                </div>
+
+                <div class="content-cards">
+                    <div class="content-card" onclick="window.location.href='modules/analyze/wacko-presentation.html'">
+                        <h3>WACKO Presentation Slides</h3>
+                        <div class="card-duration">Full slide deck</div>
+                        <p>Decoding Russian strategic narratives through cognitive mapping.</p>
+                        <ul>
+                            <li>Philosophical roots of Russian strategic thinking</li>
+                            <li>From cracked marble philosophers to digital analysis</li>
+                            <li>Modern discourse patterns mapped to ontological framework</li>
+                        </ul>
+                        <p style="margin-top: 10px; color: var(--accent-cyan);">Click to open slides &rarr;</p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Key Message</h3>
+                        <p style="font-size: 1.1rem; font-style: italic; color: var(--accent-yellow); line-height: 1.6;">
+                            "This is what you miss without structured analysis."
+                        </p>
+                        <ul style="margin-top: 15px;">
+                            <li>Why surface-level reading of Russian statements is insufficient</li>
+                            <li>How ontological mapping reveals hidden connections</li>
+                            <li>From individual statements to systemic worldview</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOCK: Transparent Battlefield -->
+            <div class="block-content" id="block-battlefield">
+                <button class="back-home" onclick="showBlock('examples')">&larr; Back to Guided Examples</button>
+                <div class="block-header">
+                    <h2>Transparent Battlefield</h2>
+                    <div class="block-time-range">10:20 - 10:45 | 25 min | The Scale</div>
+                    <p>Data fusion: where text, events, and temporal patterns converge. This is where it becomes predictive and operational.</p>
+                </div>
+
+                <div class="content-cards">
+                    <div class="content-card">
+                        <h3>Data Fusion in Action</h3>
+                        <ul>
+                            <li><strong>Text layer:</strong> Processed statements, doctrine documents</li>
+                            <li><strong>Events layer:</strong> Military actions, deployments, exercises</li>
+                            <li><strong>Temporal patterns:</strong> How rhetoric precedes/follows action</li>
+                            <li><strong>Cross-referencing:</strong> Multi-source validation</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>From Analysis to Operations</h3>
+                        <p>Where computational intelligence becomes decision-support:</p>
+                        <ul>
+                            <li>Early warning signal detection</li>
+                            <li>Pattern-based scenario building</li>
+                            <li>Real-time capability assessments</li>
+                            <li>NATO comparison benchmarks</li>
+                        </ul>
+                        <p style="margin-top: 10px; font-style: italic; color: var(--accent-green);">
+                            "This is where it scales."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOCK: Hands-On -->
+            <div class="block-content" id="block-handson">
+                <button class="back-home" onclick="showHome()">&larr; Back to overview</button>
+                <div class="block-header">
+                    <h2>Hands-On Exploration</h2>
+                    <div class="block-time-range">11:00 - 11:45 (45 min)</div>
+                    <p>Your turn to explore the sunburst applications. This is where you discover patterns yourself.</p>
+                </div>
+
+                <div class="content-cards" style="grid-template-columns: 1fr;">
+                    <div class="content-card">
+                        <h3>Instructions (5 min)</h3>
+                        <p>Quick orientation on how to navigate the sunburst apps, then 30-35 minutes of free exploration.</p>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--accent-cyan); margin: 25px 0 15px;">Mini-Tasks</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 15px;">Don't just click around randomly - try these specific challenges:</p>
+                <ul class="task-list">
+                    <li><strong>Find one surprising pattern</strong> - something you didn't expect to see in the data</li>
+                    <li><strong>Trace one concept across levels</strong> - follow a theme from top-level category down to specific statements</li>
+                    <li><strong>Compare two categories</strong> - what's the difference in how Russia discusses X vs Y?</li>
+                </ul>
+
+                <h3 style="color: var(--accent-cyan); margin: 25px 0 15px;">Explore the Sunburst Apps</h3>
+                <div class="sunburst-grid">
+                    <div class="sunburst-card" onclick="window.open('http://138.201.62.161:8057/', '_blank')">
+                        <h4>WACKO</h4>
+                        <p>Russian strategic philosophers &rarr; modern discourse</p>
+                    </div>
+                    <div class="sunburst-card" onclick="window.open('http://138.201.62.161:8068/', '_blank')">
+                        <h4>Transparent Battlefield</h4>
+                        <p>From fog of war to fever of exposure</p>
+                    </div>
+                    <div class="sunburst-card" onclick="window.open('http://138.201.62.161:8065/', '_blank')">
+                        <h4>Strengths & Weaknesses</h4>
+                        <p>Russian military regeneration assessment</p>
+                    </div>
+                    <div class="sunburst-card" onclick="window.open('http://138.201.62.161:8059/', '_blank')">
+                        <h4>Grey Horizon</h4>
+                        <p>Russia's strategic evolution in the non-linear zone</p>
+                    </div>
+                    <div class="sunburst-card" onclick="window.open('http://138.201.62.161:8062/', '_blank')">
+                        <h4>Glass Wall</h4>
+                        <p>Russian perceptions of Western deterrence</p>
+                    </div>
+                    <div class="sunburst-card" onclick="window.open('http://138.201.62.161:8071/', '_blank')">
+                        <h4>Russian Military Space</h4>
+                        <p>From posturing to practice</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; text-align: center;">
+                    <div class="sunburst-card" style="display: inline-block; max-width: 400px;" onclick="window.open('https://rubase.org/', '_blank')">
+                        <h4 style="color: var(--accent-green);">Full RuBase Deliverables Overview</h4>
+                        <p>All projects, reports, podcasts, vodcasts, and apps in one place</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOCK: Debrief -->
+            <div class="block-content" id="block-debrief">
+                <button class="back-home" onclick="showHome()">&larr; Back to overview</button>
+                <div class="block-header">
+                    <h2>Debrief & Wrap-Up</h2>
+                    <div class="block-time-range">11:45 - 12:00 (15 min)</div>
+                </div>
+
+                <div class="content-cards">
+                    <div class="content-card">
+                        <h3>Discussion</h3>
+                        <ul>
+                            <li>"What did you find surprising?"</li>
+                            <li>"What would you use this for?"</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Closing the Loop</h3>
+                        <p>Connecting back to your introductions:</p>
+                        <ul>
+                            <li>Revisit the research bottlenecks you shared at 09:15</li>
+                            <li>Show how RuBase specifically addresses them</li>
+                            <li>From "interesting demo" to "I can use this"</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>What's Next</h3>
+                        <ul>
+                            <li>Full access to all workshop materials and tools</li>
+                            <li>Fletcher School 3-day workshop archive available</li>
+                            <li>Potential collaboration pathways</li>
+                            <li>European strategic autonomy in computational intelligence</li>
+                        </ul>
+                        <div style="margin-top: 15px; padding: 12px; background: rgba(219,173,80, 0.1); border-radius: 8px; border: 1px solid var(--accent-cyan);">
+                            <a href="https://rubase.org/" target="_blank" style="color: var(--accent-cyan); font-weight: 700; text-decoration: none; font-size: 1rem;">
+                                &rarr; Overview of RuBase Deliverables (Google Drive)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Sidebar Toggle (Mobile) -->
+    <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">&#9776;</button>
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <script>
+        // Navigation
+        function navigateToWorkshop(value) {
+            if (value === 'fletcher-2603') {
+                window.location.href = 'https://sdspieg.github.io/rubase-workshop-fletcher-2603/';
+            } else if (value === 'irsem-2703') {
+                window.location.href = 'https://sdspieg.github.io/rubase-workshop-irsem-2703/';
+            } else if (value === '5day') {
+                window.location.href = 'https://sdspieg.github.io/rubase-workshop-5day/';
+            }
+        }
+
+        function showHome() {
+            document.querySelectorAll('.block-content').forEach(b => b.classList.remove('active'));
+            document.getElementById('homeScreen').classList.add('active');
+            updateTimeline(null);
+        }
+
+        function showBlock(blockId) {
+            document.querySelectorAll('.block-content').forEach(b => b.classList.remove('active'));
+
+            const block = document.getElementById('block-' + blockId);
+            if (block) {
+                block.classList.add('active');
+            } else {
+                // If no specific block, show home
+                document.getElementById('homeScreen').classList.add('active');
+            }
+
+            // Update timeline highlight
+            const timelineMap = {
+                'opening': 0,
+                'redlines': 1, 'wacko': 1, 'battlefield': 1, 'examples': 1,
+                'handson': 3,
+                'debrief': 4
+            };
+
+            updateTimeline(timelineMap[blockId]);
+
+            // Update sidebar active state
+            document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
+
+            // Close mobile sidebar
+            closeSidebar();
+
+            // Scroll to top
+            document.getElementById('contentArea').scrollTop = 0;
+        }
+
+        function scrollToBlock(blockId) {
+            showBlock(blockId);
+        }
+
+        function updateTimeline(activeIndex) {
+            document.querySelectorAll('.timeline-block').forEach((block, i) => {
+                block.classList.remove('active');
+                if (i === activeIndex) block.classList.add('active');
+            });
+        }
+
+        // Mobile sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const toggle = document.getElementById('sidebarToggle');
+
+            if (window.innerWidth <= 768) {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                toggle.innerHTML = sidebar.classList.contains('open') ? '&#10005;' : '&#9776;';
+            }
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const toggle = document.getElementById('sidebarToggle');
+
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            if (toggle) toggle.innerHTML = '&#9776;';
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+            switch(e.key) {
+                case 'Escape':
+                case 'h':
+                case 'H':
+                    if (!e.ctrlKey && !e.altKey && !e.metaKey) showHome();
+                    break;
+                case '1':
+                    if (!e.ctrlKey && !e.altKey && !e.metaKey) showBlock('opening');
+                    break;
+                case '2':
+                    if (!e.ctrlKey && !e.altKey && !e.metaKey) showBlock('examples');
+                    break;
+                case '3':
+                    if (!e.ctrlKey && !e.altKey && !e.metaKey) showBlock('handson');
+                    break;
+                case '4':
+                    if (!e.ctrlKey && !e.altKey && !e.metaKey) showBlock('debrief');
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>
